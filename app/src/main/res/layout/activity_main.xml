@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/lightButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="lightButton" />
+
+        <TextView
+            android:id="@+id/nightButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="nightButton" />
+
+        <TextView
+            android:id="@+id/grayButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="grayButton" />
+
+    </LinearLayout>
+</layout>
