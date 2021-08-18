@@ -17,10 +17,6 @@ class LightTheme : MyAppTheme {
         return ContextCompat.getColor(context, R.color.background_light)
     }
 
-    override fun activityActionbarColor(context: Context): Drawable {
-        return ColorDrawable(ContextCompat.getColor(context, R.color.actionbar_light))
-    }
-
     override fun activityImageRes(context: Context): Int {
         return R.drawable.image_light
     }
