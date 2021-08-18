@@ -74,9 +74,8 @@ class ThemeManager {
         }
     }
 
-    fun setNavigationBarBackgroundColor(activity: Activity, appTheme: AppTheme) {
+    fun setNavigationBarBackgroundColor(activity: Activity, color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val color: Int = appTheme.navigationBarColor(activity)
             activity.window.navigationBarColor = color
             syncNavigationBarButtonsColorWithBackground(activity, color)
         }
