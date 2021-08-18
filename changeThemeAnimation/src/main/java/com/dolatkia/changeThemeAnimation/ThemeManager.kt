@@ -16,7 +16,6 @@ class ThemeManager {
         val instance = ThemeManager()
     }
 
-
     fun init(activity: ThemeActivity, defaultTheme: AppTheme) {
         this.activity = activity
         liveTheme.value = defaultTheme
@@ -44,25 +43,24 @@ class ThemeManager {
         //start animation
         activity.changeTheme(newTheme, sourceCoordinate, duration)
 
-        //set StatusBar BackgroundColor
-        setStatusBarBackgroundColor(activity, newTheme.statusBarColor(activity))
-
-        //set NavigationBar BackgroundColor
-        setNavigationBarBackgroundColor(activity, newTheme)
-
         //set LiveData
         getCurrentLiveTheme().value = newTheme
     }
-
 
     fun setStatusBarBackgroundColor(activity: Activity, color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val window = activity.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = color
+            syncStatusBarIconsColorWithBackground(activity, color)
+        }
+    }
+
+    fun syncStatusBarIconsColorWithBackground(activity: Activity, statusBarBackgroundColor: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val window = activity.window
             val decorView = window.decorView
             var flags = decorView.systemUiVisibility
-            if (isColorLight(color)) {
+            if (isColorLight(statusBarBackgroundColor)) {
                 if (flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR == 0) {
                     flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     decorView.systemUiVisibility = flags
@@ -76,19 +74,22 @@ class ThemeManager {
         }
     }
 
-    private fun setNavigationBarBackgroundColor(activity: Activity, appTheme: AppTheme) {
+    fun setNavigationBarBackgroundColor(activity: Activity, appTheme: AppTheme) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val color: Int = appTheme.navigationBarColor(activity)
             activity.window.navigationBarColor = color
-            setNavigationBarButtonsColor(activity, color)
+            syncNavigationBarButtonsColorWithBackground(activity, color)
         }
     }
 
-    private fun setNavigationBarButtonsColor(activity: Activity, color: Int) {
+    fun syncNavigationBarButtonsColorWithBackground(
+        activity: Activity,
+        navigationbarBackgroundClor: Int
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val decorView = activity.window.decorView
             var flags = decorView.systemUiVisibility
-            flags = if (isColorLight(color)) {
+            flags = if (isColorLight(navigationbarBackgroundClor)) {
                 flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             } else {
                 flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()

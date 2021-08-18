@@ -20,6 +20,7 @@ abstract class ThemeActivity : AppCompatActivity() {
     private lateinit var fakeThemeImageView: ImageView
     private lateinit var decorView: FrameLayout
     private var anim: Animator? = null
+    private var themeAnimationListener: ThemeAnimationListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,20 +91,31 @@ abstract class ThemeActivity : AppCompatActivity() {
         )
         anim?.duration = animDuration
         anim?.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) {}
+            override fun onAnimationStart(animation: Animator) {
+                themeAnimationListener?.onAnimationStart(animation)
+            }
             override fun onAnimationEnd(animation: Animator) {
                 fakeThemeImageView.setImageDrawable(null)
                 fakeThemeImageView.visibility = View.GONE
+                themeAnimationListener?.onAnimationEnd(animation)
             }
 
-            override fun onAnimationCancel(animation: Animator) {}
-            override fun onAnimationRepeat(animation: Animator) {}
+            override fun onAnimationCancel(animation: Animator) {
+                themeAnimationListener?.onAnimationCancel(animation)
+            }
+            override fun onAnimationRepeat(animation: Animator) {
+                themeAnimationListener?.onAnimationRepeat(animation)
+            }
         })
         anim?.start()
     }
 
     fun isRunningChangeThemeAnimation(): Boolean {
         return anim?.isRunning == true
+    }
+
+    fun setThemeAnimationListener(listener: ThemeAnimationListener) {
+        this.themeAnimationListener = listener
     }
 
     abstract fun syncTheme(appTheme: AppTheme)
