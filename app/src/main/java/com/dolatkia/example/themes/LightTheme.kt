@@ -13,14 +13,6 @@ class LightTheme : MyAppTheme {
         return 0
     }
 
-    override fun navigationBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_light)
-    }
-
-    override fun statusBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_light)
-    }
-
     override fun activityBackgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.background_light)
     }

@@ -12,14 +12,6 @@ class NightTheme : MyAppTheme {
         return 1
     }
 
-    override fun navigationBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_night)
-    }
-
-    override fun statusBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_night)
-    }
-
     override fun activityBackgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.background_night)
     }

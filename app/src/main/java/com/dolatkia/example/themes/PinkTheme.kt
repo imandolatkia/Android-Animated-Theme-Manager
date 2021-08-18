@@ -13,14 +13,6 @@ class PinkTheme : MyAppTheme {
         return 2
     }
 
-    override fun navigationBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_pink)
-    }
-
-    override fun statusBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_pink)
-    }
-
     override fun activityBackgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.background_pink)
     }
