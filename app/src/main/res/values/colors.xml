@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="actionbar_light">#0B49E4</color>
+    <color name="actionbar_night">#8b8b8b</color>
+    <color name="actionbar_pink">#f100c9</color>
+
+    <color name="background_light">#FFFFFFFF</color>
+    <color name="background_night">#1B1B1B</color>
+    <color name="background_pink">#F5D3FB</color>
+
+    <color name="icon_light">#131313</color>
+    <color name="icon_night">#ECECEC</color>
+    <color name="icon_pink">#33003C</color>
+
+    <color name="text_light">#131313</color>
+    <color name="text_night">#ECECEC</color>
+    <color name="text_pink">#33003C</color>
+
+    <color name="button_light">#A5BEF4</color>
+    <color name="button_night">#b8b8b8</color>
+    <color name="button_pink">#EF87DE</color>
+
 </resources>

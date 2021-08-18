@@ -9,15 +9,15 @@ import androidx.lifecycle.MutableLiveData
 
 class ThemeManager {
 
-    private var liveTheme: MutableLiveData<AppTheme?> = MutableLiveData()
-    private lateinit var activity: ChangeThemeActivity
+    private var liveTheme: MutableLiveData<AppTheme> = MutableLiveData()
+    private lateinit var activity: ThemeActivity
 
     companion object {
         val instance = ThemeManager()
     }
 
 
-    fun init(activity: ChangeThemeActivity, defaultTheme: AppTheme) {
+    fun init(activity: ThemeActivity, defaultTheme: AppTheme) {
         this.activity = activity
         liveTheme.value = defaultTheme
     }
@@ -26,22 +26,28 @@ class ThemeManager {
         return getCurrentLiveTheme().value
     }
 
-    fun getCurrentLiveTheme(): MutableLiveData<AppTheme?> {
+    fun getCurrentLiveTheme(): MutableLiveData<AppTheme> {
         return liveTheme
     }
 
 
-    fun changeTheme(newTheme: AppTheme, view: View, duration: Long = 400) {
+    fun changeTheme(newTheme: AppTheme, view: View, duration: Long = 600) {
         changeTheme(newTheme, getViewCoordinates(view), duration)
     }
 
-    fun changeTheme(newTheme: AppTheme, sourceCoordinate: Coordinate, duration: Long = 400) {
+    fun changeTheme(newTheme: AppTheme, sourceCoordinate: Coordinate, duration: Long = 600) {
 
-        //animation
+        if (getCurrentTheme()?.id() == newTheme.id() || activity.isRunningChangeThemeAnimation()) {
+            return
+        }
+
+        //start animation
         activity.changeTheme(newTheme, sourceCoordinate, duration)
 
-        setStatusBarBackgroundColor(activity, newTheme.navigationBarColor(activity))
+        //set StatusBar BackgroundColor
+        setStatusBarBackgroundColor(activity, newTheme.statusBarColor(activity))
 
+        //set NavigationBar BackgroundColor
         setNavigationBarBackgroundColor(activity, newTheme)
 
         //set LiveData

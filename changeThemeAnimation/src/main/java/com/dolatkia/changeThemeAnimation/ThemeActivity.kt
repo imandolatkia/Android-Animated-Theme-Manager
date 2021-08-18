@@ -15,10 +15,11 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class ChangeThemeActivity : AppCompatActivity() {
+abstract class ThemeActivity : AppCompatActivity() {
     private lateinit var root: View
     private lateinit var fakeThemeImageView: ImageView
     private lateinit var decorView: FrameLayout
+    private var anim: Animator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,6 @@ abstract class ChangeThemeActivity : AppCompatActivity() {
         super.onStart()
         ThemeManager.instance.getCurrentTheme()?.let { syncTheme(it) }
     }
-
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
         createViews()
@@ -65,6 +65,10 @@ abstract class ChangeThemeActivity : AppCompatActivity() {
             return
         }
 
+        if (isRunningChangeThemeAnimation()) {
+            return
+        }
+
         val w = decorView.measuredWidth.toFloat()
         val h = decorView.measuredHeight.toFloat()
         val bitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
@@ -77,15 +81,15 @@ abstract class ChangeThemeActivity : AppCompatActivity() {
         syncTheme(newTheme)
 
         val finalRadius = Math.hypot(w.toDouble(), h.toDouble()).toFloat()
-        val anim = ViewAnimationUtils.createCircularReveal(
+        anim = ViewAnimationUtils.createCircularReveal(
             decorView,
             sourceCoordinate.left + sourceCoordinate.width / 2,
             sourceCoordinate.top + sourceCoordinate.height / 2,
             0f,
             finalRadius
         )
-        anim.duration = animDuration
-        anim.addListener(object : Animator.AnimatorListener {
+        anim?.duration = animDuration
+        anim?.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
             override fun onAnimationEnd(animation: Animator) {
                 fakeThemeImageView.setImageDrawable(null)
@@ -95,9 +99,12 @@ abstract class ChangeThemeActivity : AppCompatActivity() {
             override fun onAnimationCancel(animation: Animator) {}
             override fun onAnimationRepeat(animation: Animator) {}
         })
-        anim.start()
+        anim?.start()
     }
 
+    fun isRunningChangeThemeAnimation(): Boolean {
+        return anim?.isRunning == true
+    }
 
     abstract fun syncTheme(appTheme: AppTheme)
     abstract fun getStartTheme(): AppTheme

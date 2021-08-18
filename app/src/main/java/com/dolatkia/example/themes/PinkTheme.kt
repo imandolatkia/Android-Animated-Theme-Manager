@@ -1,46 +1,47 @@
 package com.dolatkia.example.themes
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.dolatkia.example.R
 
-class NightTheme : MyAppTheme {
+class PinkTheme : MyAppTheme {
 
     override fun id(): Int {
-        return 1
+        return 2
     }
 
     override fun navigationBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_night)
+        return ContextCompat.getColor(context, R.color.background_pink)
     }
 
     override fun statusBarColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_night)
+        return ContextCompat.getColor(context, R.color.background_pink)
     }
 
     override fun activityBackgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.background_night)
+        return ContextCompat.getColor(context, R.color.background_pink)
     }
 
     override fun activityActionbarColor(context: Context): Drawable {
-        return ColorDrawable(ContextCompat.getColor(context, R.color.actionbar_night))
+        return ColorDrawable(ContextCompat.getColor(context, R.color.actionbar_pink))
     }
 
     override fun activityImageRes(context: Context): Int {
-        return R.drawable.image_night
+        return R.drawable.image_pink
     }
 
     override fun activityIconColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.icon_night)
+        return ContextCompat.getColor(context, R.color.icon_pink)
     }
 
     override fun activityTextColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.text_night)
+        return ContextCompat.getColor(context, R.color.text_pink)
     }
 
     override fun activityThemeButtonColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.button_night)
+        return ContextCompat.getColor(context, R.color.button_pink)
     }
 }
