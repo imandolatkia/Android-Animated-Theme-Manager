@@ -51,13 +51,15 @@ MainActivity : ThemeActivity() {
 }
 ```
 
-3- implement ThemeActivity **abstract methods**:
+3- implement ThemeActivity ** 2 abstract methods**:
 
 ```kotlin
 
 
     // to sync ui with selected theme
     override fun syncTheme(appTheme: AppTheme) {
+        // change ui colors with new appThem here
+
         val myAppTheme = appTheme as MyAppTheme
         // set background color
         binder.root.setBackgroundColor(myAppTheme.activityBackgroundColor(this))
@@ -98,7 +100,24 @@ binder.lightButton.setOnClickListener {
 
 ```
 
-5- Done
+# how to use in multi fragments app?
+repeat all previous 4 steps, and then:
 
-# how to use in fragments?
-//We are working on it
+
+5- extends your fragments from **ThemeFragment**:
+```kotlin
+MyFragment : ThemeFragment() {
+...
+}
+```
+
+3- implement ThemeFragment **syncTheme abstract methods**:
+
+```kotlin
+    // to sync ui with selected theme
+    override fun syncTheme(appTheme: AppTheme) {
+     // change ui colors with new appThem here
+     ...
+    }
+```
+

@@ -1,11 +1,23 @@
 package com.dolatkia.animatedThemeManager
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 
-class ThemeFragment : Fragment() {
+abstract class ThemeFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onResume() {
-        ThemeManager.instance.getCurrentTheme()?.let { (activity as ThemeActivity).syncTheme(it) }
+        ThemeManager.instance.getCurrentLiveTheme().observe(this) {
+            syncTheme(it)
+        }
         super.onResume()
     }
+
+    // to sync ui with selected theme
+    abstract fun syncTheme(appTheme: AppTheme)
+
 }

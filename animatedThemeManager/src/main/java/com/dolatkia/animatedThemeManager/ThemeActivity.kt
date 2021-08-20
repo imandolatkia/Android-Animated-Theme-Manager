@@ -118,6 +118,9 @@ abstract class ThemeActivity : AppCompatActivity() {
         this.themeAnimationListener = listener
     }
 
+    // to sync ui with selected theme
     abstract fun syncTheme(appTheme: AppTheme)
+
+    // to get stat theme
     abstract fun getStartTheme(): AppTheme
 }

@@ -9,16 +9,26 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
+        <TextView
+            android:id="@+id/fragmentNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="300dp"
             android:layout_height="182dp"
-            android:layout_marginTop="130dp"
             android:scaleType="fitCenter"
             android:src="@drawable/image_light"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/fragmentNumber" />
 
         <ImageView
             android:id="@+id/share"
@@ -52,14 +62,14 @@
 
 
         <LinearLayout
-            android:id="@+id/background"
+            android:id="@+id/buttonPanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/text"
-            tools:context=".MainActivity">
+            tools:context=".singleActivitySample.SingleActivity">
 
 
             <com.google.android.material.card.MaterialCardView
@@ -123,6 +133,27 @@
 
 
         </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/nextFragmentButton"
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="#ebf3fa"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPanel">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Go To Next Fragment"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,4 @@
-package com.dolatkia.example
+package com.dolatkia.example.singleActivitySample
 
 import android.animation.Animator
 import android.app.Activity
@@ -9,16 +9,16 @@ import android.view.WindowManager
 import com.dolatkia.animatedThemeManager.AppTheme
 import com.dolatkia.animatedThemeManager.ThemeActivity
 import com.dolatkia.animatedThemeManager.ThemeManager
-import com.dolatkia.example.databinding.ActivityMainBinding
+import com.dolatkia.example.databinding.ActivitySingleBinding
 import com.dolatkia.example.themes.LightTheme
 import com.dolatkia.example.themes.MyAppTheme
 import com.dolatkia.example.themes.NightTheme
 import com.dolatkia.example.themes.PinkTheme
 
 
-class MainActivity : ThemeActivity() {
+class SingleActivity : ThemeActivity() {
 
-    lateinit var binder: ActivityMainBinding
+    lateinit var binder: ActivitySingleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +32,27 @@ class MainActivity : ThemeActivity() {
         }
 
         // create and bind views
-        binder = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        binder = ActivitySingleBinding.inflate(LayoutInflater.from(this))
         setContentView(binder.root)
 
-        // set change theme click listener
+        // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
             ThemeManager.instance.changeTheme(LightTheme(), it)
         }
-
         binder.nightButton.setOnClickListener {
             ThemeManager.instance.changeTheme(NightTheme(), it)
         }
-
         binder.pinkButton.setOnClickListener {
             ThemeManager.instance.changeTheme(PinkTheme(), it)
         }
     }
 
+    // to sync ui with selected theme
     override fun syncTheme(appTheme: AppTheme) {
+        // change ui colors with new appThem here
+
         val myAppTheme = appTheme as MyAppTheme
+
         // set background color
         binder.root.setBackgroundColor(myAppTheme.activityBackgroundColor(this))
 
@@ -73,6 +75,7 @@ class MainActivity : ThemeActivity() {
         syncStatusBarIconColors(appTheme)
     }
 
+    // to get stat theme
     override fun getStartTheme(): AppTheme {
         return LightTheme()
     }
