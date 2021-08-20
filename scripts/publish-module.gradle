@@ -1,0 +1,104 @@
+ext {
+    PUBLISH_GROUP_ID = 'io.github.imandolatkia'
+    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_ARTIFACT_ID = 'library'
+}
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+
+// Create variables with empty default values
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+
+    // Read local.properties file first if it exists
+    Properties p = new Properties()
+    new FileInputStream(secretPropsFile).withCloseable { is -> p.load(is) }
+    p.each { name, value ->
+        ext[name] = value
+        println(name)
+        println(value)
+    }
+
+}
+
+
+group = PUBLISH_GROUP_ID
+version = PUBLISH_VERSION
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "source"
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    destinationDir = file("../javadoc/")
+    failOnError false
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from tasks.javadoc.destinationDir
+}
+//Creating sources with comments
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+artifacts {
+    archives javadocJar
+    archives androidSourcesJar
+}
+
+
+afterEvaluate {
+    signing {
+        sign configurations.archives
+    }
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            pom.project {
+                packaging 'aar'
+                name = PUBLISH_ARTIFACT_ID
+                description = 'create your custom themes and change them dynamically with animation'
+                url = 'https://github.com/imandolatkia/Android-Animated-Theme-Manager'
+
+                scm {
+                    connection = 'scm:git:git://github.com/imandolatkia/Android-Animated-Theme-Manager.git'
+                    developerConnection = 'scm:git:ssh://github.com:imandolatkia/Android-Animated-Theme-Manager.git'
+                    url = 'http://github.com/imandolatkia/Android-Animated-Theme-Manager/tree/master'
+                }
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'iman.dolatkia'
+                        name = 'iman dolatkia'
+                        email = 'iman.dolatkia@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}

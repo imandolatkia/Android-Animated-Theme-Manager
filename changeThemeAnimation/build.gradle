@@ -3,6 +3,10 @@ plugins {
     id 'kotlin-android'
 }
 
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
