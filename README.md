@@ -4,11 +4,17 @@ create your custom themes and change them dynamically with animation
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
 
 # How to install?
-//we will upload it to maven soon
+add the following line to **app-level** build.gradle file, in dependencies scope:
+```gradle
+dependencies {
+    ...
+    implementation "io.github.imandolatkia:animatedThemeManager:1.0.0"
+}
+```
 
 # How to use?
 
-1- for each theme that you want in your app, create a class that extends from AppTheme:
+1- for each theme that you want in your app, create a class that extends from **AppTheme**:
 ```kotlin
 class LightTheme : MyAppTheme {
 
@@ -38,14 +44,14 @@ class LightTheme : MyAppTheme {
 }
 ```
 
-2- extends your activity from ThemeActivity:
+2- extends your activity from **ThemeActivity**:
 ```kotlin
 MainActivity : ThemeActivity() {
 ...
 }
 ```
 
-3- implement ThemeActivity abstract method:
+3- implement ThemeActivity **abstract methods**:
 
 ```kotlin
 
