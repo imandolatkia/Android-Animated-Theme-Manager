@@ -1,4 +1,4 @@
-package com.dolatkia.changeThemeAnimation
+package com.dolatkia.animatedThemeManager
 
 class Coordinate {
     var left = 0

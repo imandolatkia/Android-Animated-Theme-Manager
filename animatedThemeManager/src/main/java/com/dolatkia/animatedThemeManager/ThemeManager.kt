@@ -1,4 +1,4 @@
-package com.dolatkia.changeThemeAnimation
+package com.dolatkia.animatedThemeManager
 
 import android.app.Activity
 import android.graphics.Color

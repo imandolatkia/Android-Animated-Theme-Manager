@@ -1,12 +1,11 @@
 ext {
     PUBLISH_GROUP_ID = 'io.github.imandolatkia'
     PUBLISH_VERSION = '1.0.0'
-    PUBLISH_ARTIFACT_ID = 'library'
+    PUBLISH_ARTIFACT_ID = 'animatedThemeManager'
 }
 
 apply plugin: 'maven'
 apply plugin: 'signing'
-
 
 // Create variables with empty default values
 ext["ossrhUsername"] = ''
@@ -26,9 +25,7 @@ if (secretPropsFile.exists()) {
         println(name)
         println(value)
     }
-
 }
-
 
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
@@ -38,10 +35,12 @@ task sourceJar(type: Jar) {
     classifier "source"
 }
 task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    destinationDir = file("../javadoc/")
-    failOnError false
+    afterEvaluate {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        destinationDir = file("../javadoc/")
+        failOnError false
+    }
 }
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
@@ -74,10 +73,9 @@ uploadArchives {
             }
             pom.project {
                 packaging 'aar'
-                name = PUBLISH_ARTIFACT_ID
                 description = 'create your custom themes and change them dynamically with animation'
                 url = 'https://github.com/imandolatkia/Android-Animated-Theme-Manager'
-
+                name = PUBLISH_ARTIFACT_ID
                 scm {
                     connection = 'scm:git:git://github.com/imandolatkia/Android-Animated-Theme-Manager.git'
                     developerConnection = 'scm:git:ssh://github.com:imandolatkia/Android-Animated-Theme-Manager.git'

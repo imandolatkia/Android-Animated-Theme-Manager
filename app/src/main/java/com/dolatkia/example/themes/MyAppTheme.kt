@@ -1,8 +1,7 @@
 package com.dolatkia.example.themes
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import com.dolatkia.changeThemeAnimation.AppTheme
+import com.dolatkia.animatedThemeManager.AppTheme
 
 interface MyAppTheme : AppTheme {
     fun activityBackgroundColor(context: Context): Int

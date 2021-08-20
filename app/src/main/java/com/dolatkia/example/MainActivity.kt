@@ -6,10 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.WindowManager
-import com.dolatkia.changeThemeAnimation.AppTheme
-import com.dolatkia.changeThemeAnimation.ThemeActivity
-import com.dolatkia.changeThemeAnimation.ThemeAnimationListener
-import com.dolatkia.changeThemeAnimation.ThemeManager
+import com.dolatkia.animatedThemeManager.AppTheme
+import com.dolatkia.animatedThemeManager.ThemeActivity
+import com.dolatkia.animatedThemeManager.ThemeManager
 import com.dolatkia.example.databinding.ActivityMainBinding
 import com.dolatkia.example.themes.LightTheme
 import com.dolatkia.example.themes.MyAppTheme

@@ -1,8 +1,6 @@
 package com.dolatkia.example.themes
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.dolatkia.example.R
 
