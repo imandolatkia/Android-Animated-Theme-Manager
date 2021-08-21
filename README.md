@@ -111,7 +111,7 @@ MyFragment : ThemeFragment() {
 }
 ```
 
-3- implement ThemeFragment **syncTheme abstract methods**:
+6- implement ThemeFragment **syncTheme abstract methods**:
 
 ```kotlin
     // to sync ui with selected theme
