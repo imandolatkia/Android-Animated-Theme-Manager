@@ -14,13 +14,14 @@ dependencies {
 
 # How to use?
 
-1- create an abstract class that inherits from **AppTheme**. in this class create abstract methods to return related color for all UI element that you want to change them on each theme. for example, if you want to change the background color and text color in your **firstActivity** do this:
+1- create an abstract class that inherits from **AppTheme**. in this class create abstract methods to return related color for all UI element that you want to change them on each theme. for example, if you want to change the background color, text colors and icon colors in your **firstActivity**, do this:
 
 ```kotlin
 interface MyAppTheme : AppTheme {
     fun firstActivityBackgroundColor(context: Context): Int
     fun firstActivityTextColor(context: Context): Int
-    // any other methos
+    fun firstActivityIconColor(context: Context): Int
+    // any other methods for other elements
 }
 
 ```
@@ -42,6 +43,12 @@ class LightTheme : MyAppTheme {
     override fun firstActivityTextColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.text_light)
     }
+    
+     override fun firstActivityIconColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.icon_light)
+    }
+    
+    ...
 }
 ```
 
@@ -69,6 +76,12 @@ MainActivity : ThemeActivity() {
 
         //set text color
         binder.text.setTextColor(myAppTheme.activityTextColor(this))
+        
+         // set icons color
+        binder.share.setColorFilter(myAppTheme.firstActivityIconColor(this))
+        binder.gift.setColorFilter(myAppTheme.firstActivityIconColor(this))
+        
+        ...
     }
 
     // to get start theme
