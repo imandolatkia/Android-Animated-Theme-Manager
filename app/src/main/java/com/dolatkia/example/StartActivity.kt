@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.dolatkia.example.databinding.ActivityStartBinding
 import com.dolatkia.example.multiFragmentSample.MyFragmentActivity
+import com.dolatkia.example.reverseSample.ReverseActivity
 import com.dolatkia.example.singleActivitySample.SingleActivity
 
 
@@ -36,6 +37,12 @@ class StartActivity : AppCompatActivity() {
         // set click listener for fragmentSampleButton
         binder.fragmentSampleButton.setOnClickListener {
             val myIntent = Intent(this, MyFragmentActivity::class.java)
+            this.startActivity(myIntent)
+        }
+
+        // set click listener for reverseAnimation
+        binder.reverseAnimation.setOnClickListener {
+            val myIntent = Intent(this, ReverseActivity::class.java)
             this.startActivity(myIntent)
         }
     }

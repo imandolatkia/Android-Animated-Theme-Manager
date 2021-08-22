@@ -19,6 +19,7 @@
 
         <activity android:name=".singleActivitySample.SingleActivity" />
         <activity android:name=".multiFragmentSample.MyFragmentActivity" />
+        <activity android:name=".reverseSample.ReverseActivity" />
     </application>
 
 </manifest>

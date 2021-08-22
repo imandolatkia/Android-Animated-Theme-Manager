@@ -46,5 +46,24 @@
                 android:textColor="@color/black" />
 
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/reverseAnimation"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:textColor="?colorAccent"
+            app:cardBackgroundColor="#ebf3fa"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Reverse Animation"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </layout>
