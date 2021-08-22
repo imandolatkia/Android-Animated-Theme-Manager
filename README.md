@@ -68,9 +68,10 @@ MainActivity : ThemeActivity() {
         binder.root.setBackgroundColor(myAppTheme.firstActivityBackgroundColor(this))
 
         //set text color
+        binder.text.setTextColor(myAppTheme.activityTextColor(this))
     }
 
-    // to get stat theme
+    // to get start theme
     override fun getStartTheme(): AppTheme {
         return LightTheme()
     }
