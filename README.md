@@ -1,7 +1,27 @@
-# Android-Animated-Theme-Manager
+# Android Animated Theme Manager
 create your custom themes and change them dynamically with animation
 
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
+
+
+# Features
+⭐change theme without recreating activities and fragments.
+
+⭐support muli fragments apps.
+
+⭐ripple animation.
+
+⭐reverse animation.
+
+⭐changeable animation duration.
+
+⭐changeable animation position.
+
+⭐animation listener.
+
+⭐observe changes of themes for custom actions with Livedata.
+
+⭐easy to use.
 
 # How to install?
 add the following line to **app-level** build.gradle file, in dependencies scope:
@@ -32,7 +52,7 @@ interface MyAppTheme : AppTheme {
 ```kotlin
 class LightTheme : MyAppTheme {
 
-    override fun id(): Int {
+    override fun id(): Int { // set unique iD for each theme 
         return 0
     }
 
@@ -95,18 +115,20 @@ MainActivity : ThemeActivity() {
 
 ```
 
-5- change theme from user click with ```ThemeManager.instance.changeTheme()``` method
-
+5- change theme from user click with ```ThemeManager.instance.changeTheme()``` method:
 ```kotlin
 // set change theme click listener
 binder.lightButton.setOnClickListener {
   ThemeManager.instance.changeTheme(LightTheme(), it)
 }
-
 ```
+the first argument is the selected theme.
+
+the second argument is the view that animation starts from the center of it.
+
 
 # how to use in multi fragments app?
-repeat all previous 4 steps, and then:
+repeat all previous 5 steps, and then:
 
 
 6- extends your fragments from **ThemeFragment**:
@@ -125,4 +147,83 @@ MyFragment : ThemeFragment() {
      ...
     }
 ```
+
+# Some Other settings:
+###  ✔️ reverse animation
+if you want to use reverse animation, call reverseChangeTheme() instead of changeTheme():
+
+```kotline
+   binder.lightButton.setOnClickListener {
+        ThemeManager.instance.reverseChangeTheme(LightTheme(), it)
+   }
+```
+![reverse ripple theme animation](https://user-images.githubusercontent.com/6734608/130370446-1218d53d-9c25-4dc9-8d6b-f7e8a1056731.gif)
+
+###  ✔️ change animation duration
+if you want to change animation duration, add your desire duration in millisecond as the third argument of ThemeManager.instance.changeTheme(). the default value is 600:
+
+```kotline
+   binder.lightButton.setOnClickListener {
+        ThemeManager.instance.changeTheme(LightTheme(), it, 800)
+   }
+```
+
+###  ✔️ change animation center position
+if you want to start animation somewhere other than the view that clicked, send a Coordinate object instead of View in ThemeManager.instance.changeTheme()
+```kotline
+   binder.lightButton.setOnClickListener {
+          binder.nightButton.setOnClickListener {
+            ThemeManager.instance.changeTheme(NightTheme(), Coordinate(10, 20)
+        }
+   }
+```
+
+witch the Coordinate is:
+```kotlin
+ Coordinate(var x: Int, var y: Int) 
+```
+
+### ✔️ observe changes of themes yourself
+if you want to observe changes of themes and do some custom action, you can use theme Livedata in any fragment or activity:
+
+```kotlin
+    ThemeManager.instance.getCurrentLiveTheme().observe(this) {
+        Toast.makeText(this, "on Theme changed to ${it.id()}", Toast.LENGTH_SHORT).show()
+    }
+```
+
+
+### ✔️ set animation listener
+if you want to set animation listener, use setThemeAnimationListener() method in your activity
+
+```kotlin
+     setThemeAnimationListener(MyThemeAnimationListener(this))
+```
+witch the MyThemeAnimationListener is:
+
+```kotlin
+    class MyThemeAnimationListener(var context: Context) : ThemeAnimationListener{
+        override fun onAnimationStart(animation: Animator) {
+           Toast.makeText(context, "onAnimationStart", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
+            Toast.makeText(context, "onAnimationEnd", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+            Toast.makeText(context, "onAnimationCancel", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+            Toast.makeText(context, "onAnimationRepeat", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+```
+
+
+
+
+
 
