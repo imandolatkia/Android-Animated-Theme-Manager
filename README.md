@@ -1,4 +1,4 @@
-# Android Animated Theme Manager
+# Android Animated Theme Manager  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 create your custom themes and change them dynamically with animation
 
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
@@ -23,7 +23,9 @@ create your custom themes and change them dynamically with animation
 
 ⭐easy to use.
 
-# How to install?
+# How to install? [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager)
+
+
 add the following line to **app-level** build.gradle file, in dependencies scope:
 ```gradle
 dependencies {
@@ -33,7 +35,6 @@ dependencies {
 ```
 
 # How to use?
-
 1- create an abstract class that inherits from **AppTheme**. in this class create abstract methods to return related color for all UI element that you want to change them on each theme. for example, if you want to change the background color, text colors and icon colors in your **firstActivity**, do this:
 
 ```kotlin
