@@ -127,7 +127,7 @@ the first argument is the selected theme.
 the second argument is the view that animation starts from the center of it.
 
 
-# how to use in multi fragments app?
+# How to use in multi fragments app?
 repeat all previous 5 steps, and then:
 
 
@@ -148,7 +148,7 @@ MyFragment : ThemeFragment() {
     }
 ```
 
-# Some Other settings:
+# Some other settings:
 ###  ✔️ reverse animation
 if you want to use reverse animation, call reverseChangeTheme() instead of changeTheme():
 
