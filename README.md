@@ -50,6 +50,10 @@ class LightTheme : MyAppTheme {
     
     ...
 }
+
+class NightTheme : MyAppTheme {...}
+class PinkTheme : MyAppTheme {...}
+
 ```
 
 
