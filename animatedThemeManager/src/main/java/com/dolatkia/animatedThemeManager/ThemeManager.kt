@@ -29,19 +29,32 @@ class ThemeManager {
         return liveTheme
     }
 
+    fun reverseChangeTheme(newTheme: AppTheme, view: View, duration: Long = 600) {
+        changeTheme(newTheme, getViewCoordinates(view), duration, true)
+    }
+
+    fun reverseChangeTheme(newTheme: AppTheme, sourceCoordinate: Coordinate, duration: Long = 600) {
+        changeTheme(newTheme, sourceCoordinate, duration, true)
+
+    }
 
     fun changeTheme(newTheme: AppTheme, view: View, duration: Long = 600) {
         changeTheme(newTheme, getViewCoordinates(view), duration)
     }
 
-    fun changeTheme(newTheme: AppTheme, sourceCoordinate: Coordinate, duration: Long = 600) {
+    fun changeTheme(
+        newTheme: AppTheme,
+        sourceCoordinate: Coordinate,
+        duration: Long = 600,
+        isRevers: Boolean = false
+    ) {
 
         if (getCurrentTheme()?.id() == newTheme.id() || activity.isRunningChangeThemeAnimation()) {
             return
         }
 
         //start animation
-        activity.changeTheme(newTheme, sourceCoordinate, duration)
+        activity.changeTheme(newTheme, sourceCoordinate, duration, isRevers)
 
         //set LiveData
         getCurrentLiveTheme().value = newTheme
@@ -106,12 +119,10 @@ class ThemeManager {
     }
 
     private fun getViewCoordinates(view: View): Coordinate {
-        val coordinate = Coordinate()
-        coordinate.left = getRelativeLeft(view)
-        coordinate.top = getRelativeTop(view)
-        coordinate.width = view.width
-        coordinate.height = view.height
-        return coordinate
+        return Coordinate(
+            getRelativeLeft(view) + view.width / 2,
+            getRelativeTop(view) + view.height / 2
+        )
     }
 
     private fun getRelativeLeft(myView: View): Int {

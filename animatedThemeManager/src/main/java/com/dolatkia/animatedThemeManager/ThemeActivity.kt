@@ -14,10 +14,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.hypot
 
 abstract class ThemeActivity : AppCompatActivity() {
     private lateinit var root: View
-    private lateinit var fakeThemeImageView: ImageView
+    private lateinit var frontFakeThemeImageView: ImageView
+    private lateinit var behindFakeThemeImageView: ImageView
     private lateinit var decorView: FrameLayout
     private var anim: Animator? = null
     private var themeAnimationListener: ThemeAnimationListener? = null
@@ -58,11 +60,20 @@ abstract class ThemeActivity : AppCompatActivity() {
     private fun createViews() {
         root = LayoutInflater.from(this).inflate(R.layout.change_theme_activity, null)
         decorView = root.findViewById(R.id.mainContainer)
-        fakeThemeImageView = root.findViewById(R.id.fakeThemeImageView)
+        frontFakeThemeImageView = root.findViewById(R.id.frontFakeThemeImageView)
+        behindFakeThemeImageView = root.findViewById(R.id.behindFakeThemeImageView)
     }
 
-    fun changeTheme(newTheme: AppTheme, sourceCoordinate: Coordinate, animDuration: Long) {
-        if (fakeThemeImageView.visibility == View.VISIBLE || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+    fun changeTheme(
+        newTheme: AppTheme,
+        sourceCoordinate: Coordinate,
+        animDuration: Long,
+        isReverse: Boolean
+    ) {
+        if (frontFakeThemeImageView.visibility == View.VISIBLE ||
+            behindFakeThemeImageView.visibility == View.VISIBLE ||
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
+        ) {
             return
         }
 
@@ -70,43 +81,67 @@ abstract class ThemeActivity : AppCompatActivity() {
             return
         }
 
+        // take screenshot
         val w = decorView.measuredWidth.toFloat()
         val h = decorView.measuredHeight.toFloat()
         val bitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         decorView.draw(canvas)
 
-        fakeThemeImageView.setImageBitmap(bitmap)
-        fakeThemeImageView.visibility = View.VISIBLE
-
+        // update theme
         syncTheme(newTheme)
 
-        val finalRadius = Math.hypot(w.toDouble(), h.toDouble()).toFloat()
-        anim = ViewAnimationUtils.createCircularReveal(
-            decorView,
-            sourceCoordinate.left + sourceCoordinate.width / 2,
-            sourceCoordinate.top + sourceCoordinate.height / 2,
-            0f,
-            finalRadius
-        )
+        //create anim
+        val finalRadius = hypot(w.toDouble(), h.toDouble()).toFloat()
+        if (isReverse) {
+            frontFakeThemeImageView.setImageBitmap(bitmap)
+            frontFakeThemeImageView.visibility = View.VISIBLE
+            anim = ViewAnimationUtils.createCircularReveal(
+                frontFakeThemeImageView,
+                sourceCoordinate.x,
+                sourceCoordinate.y,
+                finalRadius,
+                0f
+            )
+        } else {
+            behindFakeThemeImageView.setImageBitmap(bitmap)
+            behindFakeThemeImageView.visibility = View.VISIBLE
+            anim = ViewAnimationUtils.createCircularReveal(
+                decorView,
+                sourceCoordinate.x,
+                sourceCoordinate.y,
+                0f,
+                finalRadius
+            )
+        }
+
+        // set duration
         anim?.duration = animDuration
+
+        // set listener
         anim?.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
                 themeAnimationListener?.onAnimationStart(animation)
             }
+
             override fun onAnimationEnd(animation: Animator) {
-                fakeThemeImageView.setImageDrawable(null)
-                fakeThemeImageView.visibility = View.GONE
+                behindFakeThemeImageView.setImageDrawable(null)
+                frontFakeThemeImageView.setImageDrawable(null)
+                frontFakeThemeImageView.visibility = View.GONE
+                behindFakeThemeImageView.visibility = View.GONE
                 themeAnimationListener?.onAnimationEnd(animation)
             }
 
             override fun onAnimationCancel(animation: Animator) {
                 themeAnimationListener?.onAnimationCancel(animation)
             }
+
             override fun onAnimationRepeat(animation: Animator) {
                 themeAnimationListener?.onAnimationRepeat(animation)
             }
         })
+
+        // start it :)
         anim?.start()
     }
 
