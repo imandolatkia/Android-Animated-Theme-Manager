@@ -54,7 +54,7 @@ MainActivity : ThemeActivity() {
 }
 ```
 
-4- implement ThemeActivity ** 2 abstract methods**:
+4- implement ThemeActivity **2 abstract methods**:
 
 ```kotlin
 
@@ -65,25 +65,9 @@ MainActivity : ThemeActivity() {
 
         val myAppTheme = appTheme as MyAppTheme
         // set background color
-        binder.root.setBackgroundColor(myAppTheme.activityBackgroundColor(this))
-
-        //set top image
-        binder.image.setImageResource(myAppTheme.activityImageRes(this))
-
-        // set icons color
-        binder.share.setColorFilter(myAppTheme.activityIconColor(this))
-        binder.gift.setColorFilter(myAppTheme.activityIconColor(this))
+        binder.root.setBackgroundColor(myAppTheme.firstActivityBackgroundColor(this))
 
         //set text color
-        binder.text.setTextColor(myAppTheme.activityTextColor(this))
-
-        //set card view colors
-        binder.lightButton.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
-        binder.nightButton.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
-        binder.pinkButton.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
-
-        //syncStatusBarIconColors
-        syncStatusBarIconColors(appTheme)
     }
 
     // to get stat theme
