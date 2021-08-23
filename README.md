@@ -8,7 +8,7 @@ create your custom themes and change them dynamically with ripple animation
 
 
 # Features
-⭐support **java** or **kotlin** projects.
+⭐support **java** and **kotlin** projects.
 
 ⭐change theme **without recreating** activities and fragments.
 
