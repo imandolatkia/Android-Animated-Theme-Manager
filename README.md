@@ -30,7 +30,7 @@ add the following line to **app-level** build.gradle file, in dependencies scope
 ```gradle
 dependencies {
     ...
-    implementation "io.github.imandolatkia:animatedThemeManager:1.1.1"
+    implementation "io.github.imandolatkia:animatedThemeManager:1.1.2"
 }
 ```
 
