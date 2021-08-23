@@ -70,14 +70,16 @@ abstract class ThemeActivity : AppCompatActivity() {
         animDuration: Long,
         isReverse: Boolean
     ) {
-        if (frontFakeThemeImageView.visibility == View.VISIBLE ||
-            behindFakeThemeImageView.visibility == View.VISIBLE ||
-            Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
-        ) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            // update theme and return: no animation
+            syncTheme(newTheme)
             return
         }
 
-        if (isRunningChangeThemeAnimation()) {
+        if (frontFakeThemeImageView.visibility == View.VISIBLE ||
+            behindFakeThemeImageView.visibility == View.VISIBLE ||
+            isRunningChangeThemeAnimation()
+        ) {
             return
         }
 
