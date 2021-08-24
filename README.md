@@ -1,5 +1,6 @@
 # Android Animated Theme Manager  
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)   [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager)
+[![Generic badge](https://img.shields.io/badge/Repo_Size-26_kb-orange.svg)](https://search.maven.org/remotecontent?filepath=io/github/imandolatkia/animatedThemeManager/1.1.2/animatedThemeManager-1.1.2.aar)
 
 create your custom themes and change them dynamically with ripple animation
 
