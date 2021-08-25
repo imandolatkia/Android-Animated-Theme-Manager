@@ -2,6 +2,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)   [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager)
 [![Generic badge](https://img.shields.io/badge/Repo_Size-26_kb-orange.svg)](https://search.maven.org/remotecontent?filepath=io/github/imandolatkia/animatedThemeManager/1.1.2/animatedThemeManager-1.1.2.aar)
 [![CodeFactor](https://www.codefactor.io/repository/github/imandolatkia/android-animated-theme-manager/badge)](https://www.codefactor.io/repository/github/imandolatkia/android-animated-theme-manager)
+[![Generic badge](https://img.shields.io/badge/kotlin-100-blue.svg)](https://github.com/imandolatkia/Android-Animated-Theme-Manager/search?l=kotlin)
+
 
 create your custom themes and change them dynamically with ripple animation
 
