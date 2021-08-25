@@ -1,17 +1,24 @@
-# Android Animated Theme Manager  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
-create your custom themes and change them dynamically with animation
+# Android Animated Theme Manager  
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)   [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager)
+[![Generic badge](https://img.shields.io/badge/Repo_Size-26_kb-orange.svg)](https://search.maven.org/remotecontent?filepath=io/github/imandolatkia/animatedThemeManager/1.1.2/animatedThemeManager-1.1.2.aar)
+[![CodeFactor](https://www.codefactor.io/repository/github/imandolatkia/android-animated-theme-manager/badge)](https://www.codefactor.io/repository/github/imandolatkia/android-animated-theme-manager)
+
+create your custom themes and change them dynamically with ripple animation
 
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
+</br></br>
 
 
 # Features
-⭐change theme without recreating activities and fragments.
+⭐support **java** and **kotlin** projects.
+
+⭐change theme **without recreating** activities and fragments.
 
 ⭐support muli fragments apps.
 
 ⭐ripple animation.
 
-⭐reverse animation.
+⭐**reverse animation**.
 
 ⭐changeable animation duration.
 
@@ -21,7 +28,11 @@ create your custom themes and change them dynamically with animation
 
 ⭐observe changes of themes for custom actions with Livedata.
 
-⭐easy to use.
+⭐easy to use, 5 or 7 tiny steps.
+
+⭐**support any android APIs** (animation works on API>20).
+
+</br></b>
 
 # How to install? [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager)
 
@@ -33,6 +44,7 @@ dependencies {
     implementation "io.github.imandolatkia:animatedThemeManager:1.1.2"
 }
 ```
+</br>
 
 # How to use?
 1- create an abstract class that inherits from **AppTheme**. in this class create abstract methods to return related color for all UI element that you want to change them on each theme. for example, if you want to change the background color, text colors and icon colors in your **firstActivity**, do this:
@@ -126,7 +138,7 @@ binder.lightButton.setOnClickListener {
 the first argument is the selected theme.
 
 the second argument is the view that animation starts from the center of it.
-
+</br></br>
 
 # How to use in multi fragments app?
 repeat all previous 5 steps, and then:
@@ -148,8 +160,9 @@ MyFragment : ThemeFragment() {
      ...
     }
 ```
+</br>
 
-# Some other settings:
+# Some other settings and customization:
 ###  ✔️ reverse animation
 if you want to use reverse animation, call reverseChangeTheme() instead of changeTheme():
 
