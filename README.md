@@ -59,9 +59,20 @@ interface MyAppTheme : AppTheme {
     fun firstActivityIconColor(context: Context): Int
     // any other methods for other elements
 }
-
 ```
 
+<details><summary>JAVA</summary>
+<p>
+
+```java
+interface MyAppTheme extends AppTheme {
+    int firstActivityBackgroundColor(@NotNull Context context);
+    int firstActivityTextColor(@NotNull Context context);
+    int firstActivityIconColor(@NotNull Context context);
+    // any other methods for other elements
+}
+```
+</details>
 
 2- for each theme that you want in your app, create a class that extends from  **the class that was created in step 1 (MyAppTheme)**, and implement methods with related colors or resources, for example, if you want to have 3 themes, you should create 3 class and implement methods:
 
@@ -92,6 +103,36 @@ class PinkTheme : MyAppTheme {...}
 
 ```
 
+<details><summary>JAVA</summary>
+<p>
+
+```java
+public class LightTheme implements MyAppTheme {
+    public int id() { // set unique iD for each theme 
+        return 0;
+    }
+
+    public int firstActivityBackgroundColor(@NotNull Context context) {
+        return ContextCompat.getColor(context, R.color.background_light);
+    }
+
+    public int firstActivityTextColor(@NotNull Context context) {
+        return ContextCompat.getColor(context,  R.color.text_light);
+    }
+
+    public int firstActivityIconColor(@NotNull Context context) {
+        return ContextCompat.getColor(context, R.color.icon_light);
+    }
+    
+    ...
+}
+    
+public class NightTheme implements MyAppTheme {...}
+public class PinkTheme implements MyAppTheme {...}
+
+```
+</details>
+
 
 
 3- extends your activity from **ThemeActivity**:
@@ -100,36 +141,74 @@ MainActivity : ThemeActivity() {
 ...
 }
 ```
+<details><summary>JAVA</summary>
+<p>
+
+```java
+public class MainActivity implements ThemeActivity {
+...
+}
+
+```
+</details>
 
 4- implement ThemeActivity **2 abstract methods**:
 
 ```kotlin
+// to sync ui with selected theme
+override fun syncTheme(appTheme: AppTheme) {
+    // change ui colors with new appThem here
 
+    val myAppTheme = appTheme as MyAppTheme
+    // set background color
+    binder.root.setBackgroundColor(myAppTheme.firstActivityBackgroundColor(this))
 
-    // to sync ui with selected theme
-    override fun syncTheme(appTheme: AppTheme) {
-        // change ui colors with new appThem here
-
-        val myAppTheme = appTheme as MyAppTheme
-        // set background color
-        binder.root.setBackgroundColor(myAppTheme.firstActivityBackgroundColor(this))
-
-        //set text color
-        binder.text.setTextColor(myAppTheme.activityTextColor(this))
+    //set text color
+    binder.text.setTextColor(myAppTheme.activityTextColor(this))
         
-         // set icons color
-        binder.share.setColorFilter(myAppTheme.firstActivityIconColor(this))
-        binder.gift.setColorFilter(myAppTheme.firstActivityIconColor(this))
-        
-        ...
-    }
+    // set icons color
+    binder.share.setColorFilter(myAppTheme.firstActivityIconColor(this))
+    binder.gift.setColorFilter(myAppTheme.firstActivityIconColor(this))        
+    ...
+}
 
-    // to get start theme
-    override fun getStartTheme(): AppTheme {
-        return LightTheme()
-    }
+// to get start theme
+override fun getStartTheme(): AppTheme {
+    return LightTheme()
+}
 
 ```
+
+<details><summary>JAVA</summary>
+<p>
+
+```java
+// to sync ui with selected theme
+@Override
+public void syncTheme(@NotNull AppTheme appTheme) {
+    // change ui colors with new appThem here
+
+    MyAppTheme myAppTheme = (MyAppTheme) appTheme;
+
+    // set background color
+    binder.getRoot().setBackgroundColor(myAppTheme.activityBackgroundColor(this));
+
+    //set text color
+    binder.text.setTextColor(myAppTheme.activityTextColor(this));
+
+    // set icons color
+    binder.share.setColorFilter(myAppTheme.activityBackgroundColor(this));
+    binder.gift.setColorFilter(myAppTheme.activityBackgroundColor(this));
+}
+
+// to get start theme
+@NotNull
+@Override
+public AppTheme getStartTheme() {
+    return new LightTheme();
+}
+```
+</details>
 
 5- change theme from user click with ```ThemeManager.instance.changeTheme()``` method:
 ```kotlin
@@ -138,6 +217,19 @@ binder.lightButton.setOnClickListener {
   ThemeManager.instance.changeTheme(LightTheme(), it)
 }
 ```
+<details><summary>JAVA</summary>
+<p>
+
+```java
+binder.lightButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      ThemeManager.Companion.getInstance().changeTheme(new LightTheme(), v, 600);
+    }
+});
+```
+</details>
+
 the first argument is the selected theme.
 
 the second argument is the view that animation starts from the center of it.
@@ -154,15 +246,37 @@ MyFragment : ThemeFragment() {
 }
 ```
 
+<details><summary>JAVA</summary>
+<p>
+
+```java
+public class MyFragment implements ThemeFragment {
+...
+}
+```
+</details>
+
 7- implement ThemeFragment **syncTheme abstract methods**:
 
 ```kotlin
-    // to sync ui with selected theme
-    override fun syncTheme(appTheme: AppTheme) {
-     // change ui colors with new appThem here
-     ...
-    }
+// to sync ui with selected theme
+override fun syncTheme(appTheme: AppTheme) {
+    // change ui colors with new appThem here
+    ...
+}
 ```
+
+<details><summary>JAVA</summary>
+<p>
+
+```java
+@Override
+public void syncTheme(@NotNull AppTheme appTheme) {
+    // change ui colors with new appThem here
+    ...
+}
+```
+</details>
 </br>
 
 # Some other settings and customization:
