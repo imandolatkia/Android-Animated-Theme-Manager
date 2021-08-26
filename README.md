@@ -13,27 +13,17 @@ create your custom themes and change them dynamically with ripple animation
 
 
 # Features
-⭐support **java** and **kotlin** projects.
-
-⭐change theme **without recreating** activities and fragments.
-
-⭐support muli fragments apps.
-
-⭐ripple animation.
-
-⭐**reverse animation**.
-
-⭐changeable animation duration.
-
-⭐changeable animation position.
-
-⭐animation listener.
-
-⭐observe changes of themes for custom actions with Livedata.
-
-⭐easy to use, 5 or 7 tiny steps.
-
-⭐**support any android APIs** (animation works on API>20).
+* support **java** and **kotlin** projects.
+* change theme **without recreating** activities and fragments.
+* support muli fragments apps.
+* ripple animation.
+* **reverse animation**.
+* changeable animation duration.
+* changeable animation position.
+* animation listener.
+* observe changes of themes for custom actions with Livedata.
+* easy to use, 5 or 7 tiny steps.
+* **support any android APIs** (animation works on API>20).
 
 </br></b>
 
@@ -61,7 +51,7 @@ interface MyAppTheme : AppTheme {
 }
 ```
 
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
@@ -103,7 +93,7 @@ class PinkTheme : MyAppTheme {...}
 
 ```
 
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
@@ -141,7 +131,7 @@ MainActivity : ThemeActivity() {
 ...
 }
 ```
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
@@ -179,7 +169,7 @@ override fun getStartTheme(): AppTheme {
 
 ```
 
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
@@ -217,7 +207,7 @@ binder.lightButton.setOnClickListener {
   ThemeManager.instance.changeTheme(LightTheme(), it)
 }
 ```
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
@@ -246,7 +236,7 @@ MyFragment : ThemeFragment() {
 }
 ```
 
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
@@ -266,7 +256,7 @@ override fun syncTheme(appTheme: AppTheme) {
 }
 ```
 
-<details><summary>JAVA</summary>
+<details><summary>java</summary>
 <p>
 
 ```java
