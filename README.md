@@ -293,7 +293,7 @@ if you want to use reverse animation, call reverseChangeTheme() instead of chang
 ###  ✔️ change animation duration
 if you want to change animation duration, add your desire duration in millisecond as the third argument of ThemeManager.instance.changeTheme(). the default value is 600:
 
-```kotline
+```kotlin
    binder.lightButton.setOnClickListener {
         ThemeManager.instance.changeTheme(LightTheme(), it, 800)
    }
@@ -301,7 +301,7 @@ if you want to change animation duration, add your desire duration in millisecon
 
 ###  ✔️ change animation center position
 if you want to start animation somewhere other than the view that clicked, send a Coordinate object instead of View in ThemeManager.instance.changeTheme()
-```kotline
+```kotlin
    binder.lightButton.setOnClickListener {
           binder.nightButton.setOnClickListener {
             ThemeManager.instance.changeTheme(NightTheme(), Coordinate(10, 20)
