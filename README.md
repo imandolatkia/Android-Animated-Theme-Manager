@@ -6,7 +6,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/imandolatkia/android-animated-theme-manager/badge)](https://www.codefactor.io/repository/github/imandolatkia/android-animated-theme-manager)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=imandolatkia_Android-Animated-Theme-Manager&metric=alert_status)](https://sonarcloud.io/dashboard?id=imandolatkia_Android-Animated-Theme-Manager)
 
-create your custom themes and change them dynamically with ripple animation
+Create custom themes and change them dynamically with the ripple animation
 
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
 </br></br>
@@ -15,7 +15,7 @@ create your custom themes and change them dynamically with ripple animation
 # Features
 * support **java** and **kotlin** projects.
 * change theme **without recreating** activities and fragments.
-* support muli fragments apps.
+* support multi fragments apps.
 * ripple animation.
 * **reverse animation**.
 * changeable animation duration.
@@ -29,8 +29,7 @@ create your custom themes and change them dynamically with ripple animation
 
 # How to install? [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.imandolatkia/animatedThemeManager)
 
-
-add the following line to **app-level** build.gradle file, in dependencies scope:
+Add the following line to **app-level** build.gradle file, in dependencies scope:
 ```gradle
 dependencies {
     ...
@@ -40,7 +39,7 @@ dependencies {
 </br>
 
 # How to use?
-1- create an abstract class that inherits from **AppTheme**. in this class create abstract methods to return related color for all UI element that you want to change them on each theme. for example, if you want to change the background color, text colors and icon colors in your **firstActivity**, do this:
+1- Create an abstract class that inherits from **AppTheme**. In this class create abstract methods to return related color for all UI element that you want to change them on each theme. For example, if you want to change the background color, text colors and icon colors in your **firstActivity**, do the following:
 
 ```kotlin
 interface MyAppTheme : AppTheme {
@@ -64,7 +63,7 @@ interface MyAppTheme extends AppTheme {
 ```
 </details>
 
-2- for each theme that you want in your app, create a class that extends from  **the class that was created in step 1 (MyAppTheme)**, and implement methods with related colors or resources, for example, if you want to have 3 themes, you should create 3 class and implement methods:
+2- For each theme that you want in your app, create a class that extends from  **the class that was created in step 1 (MyAppTheme)**, and implement methods with related colors or resources, for example, if you want to have 3 themes, you should create 3 class and implement methods:
 
 ```kotlin
 class LightTheme : MyAppTheme {
@@ -124,8 +123,7 @@ public class PinkTheme implements MyAppTheme {...}
 </details>
 
 
-
-3- extends your activity from **ThemeActivity**:
+3- Extend your activity from **ThemeActivity**:
 ```kotlin
 MainActivity : ThemeActivity() {
 ...
@@ -142,7 +140,7 @@ public class MainActivity implements ThemeActivity {
 ```
 </details>
 
-4- implement ThemeActivity **2 abstract methods**:
+4- Implement ThemeActivity's **2 abstract methods**:
 
 ```kotlin
 // to sync ui with selected theme
@@ -162,7 +160,7 @@ override fun syncTheme(appTheme: AppTheme) {
     ...
 }
 
-// to get start theme
+// to get the start theme
 override fun getStartTheme(): AppTheme {
     return LightTheme()
 }
@@ -200,7 +198,7 @@ public AppTheme getStartTheme() {
 ```
 </details>
 
-5- change theme from user click with ```ThemeManager.instance.changeTheme()``` method:
+5- Change theme with the ```ThemeManager.instance.changeTheme()``` method:
 ```kotlin
 // set change theme click listener
 binder.lightButton.setOnClickListener {
@@ -220,16 +218,16 @@ binder.lightButton.setOnClickListener(new View.OnClickListener() {
 ```
 </details>
 
-the first argument is the selected theme.
+The first argument is the selected theme.
 
-the second argument is the view that animation starts from the center of it.
+The second argument is the view that animation starts from the center of it.
 </br></br>
 
 # How to use in multi fragments app?
-repeat all previous 5 steps, and then:
+Repeat all previous 5 steps, and then:
 
 
-6- extends your fragments from **ThemeFragment**:
+6- Extend your fragments from **ThemeFragment**:
 ```kotlin
 MyFragment : ThemeFragment() {
 ...
@@ -246,7 +244,7 @@ public class MyFragment implements ThemeFragment {
 ```
 </details>
 
-7- implement ThemeFragment **syncTheme abstract methods**:
+7- Implement ThemeFragment **syncTheme abstract methods**:
 
 ```kotlin
 // to sync ui with selected theme
@@ -271,7 +269,7 @@ public void syncTheme(@NotNull AppTheme appTheme) {
 
 # Some other settings and customization:
 ###  ✔️ reverse animation
-if you want to use reverse animation, call reverseChangeTheme() instead of changeTheme():
+If you want to use the reverse animation, call reverseChangeTheme() instead of changeTheme():
 
 ```kotline
    binder.lightButton.setOnClickListener {
@@ -281,7 +279,7 @@ if you want to use reverse animation, call reverseChangeTheme() instead of chang
 ![reverse ripple theme animation](https://user-images.githubusercontent.com/6734608/130370446-1218d53d-9c25-4dc9-8d6b-f7e8a1056731.gif)
 
 ###  ✔️ change animation duration
-if you want to change animation duration, add your desire duration in millisecond as the third argument of ThemeManager.instance.changeTheme(). the default value is 600:
+If you want to change the animation duration, add your desired duration in milliseconds as the third argument of ThemeManager.instance.changeTheme(). The default value is 600:
 
 ```kotlin
    binder.lightButton.setOnClickListener {
@@ -290,7 +288,7 @@ if you want to change animation duration, add your desire duration in millisecon
 ```
 
 ###  ✔️ change animation center position
-if you want to start animation somewhere other than the view that clicked, send a Coordinate object instead of View in ThemeManager.instance.changeTheme()
+If you want to start animation somewhere other than the view that clicked, send a Coordinate object instead of a View in ThemeManager.instance.changeTheme()
 ```kotlin
    binder.lightButton.setOnClickListener {
           binder.nightButton.setOnClickListener {
@@ -305,7 +303,7 @@ witch the Coordinate is:
 ```
 
 ### ✔️ observe changes of themes yourself
-if you want to observe changes of themes and do some custom action, you can use theme Livedata in any fragment or activity:
+If you want to observe changes of themes and do some custom action, you can use theme Livedata in any fragment or activity:
 
 ```kotlin
     ThemeManager.instance.getCurrentLiveTheme().observe(this) {
@@ -315,7 +313,7 @@ if you want to observe changes of themes and do some custom action, you can use 
 
 
 ### ✔️ set animation listener
-if you want to set animation listener, use setThemeAnimationListener() method in your activity
+If you want to set an animation listener, use setThemeAnimationListener() method in your activity
 
 ```kotlin
      setThemeAnimationListener(MyThemeAnimationListener(this))
@@ -345,12 +343,9 @@ witch the MyThemeAnimationListener is:
 # Stargazers
 [![Stargazers repo roster for @imandolatkia/Android-Animated-Theme-Manager](https://reporoster.com/stars/imandolatkia/Android-Animated-Theme-Manager)](https://github.com/imandolatkia/Android-Animated-Theme-Manager/stargazers)
 
-
 # Forkers
 [![Forkers repo roster for @imandolatkia/Android-Animated-Theme-Manager](https://reporoster.com/forks/imandolatkia/Android-Animated-Theme-Manager)](https://github.com/imandolatkia/Android-Animated-Theme-Manager/network/members)
 
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=imandolatkia_Android-Animated-Theme-Manager)](https://sonarcloud.io/dashboard?id=imandolatkia_Android-Animated-Theme-Manager)
-
-
 
