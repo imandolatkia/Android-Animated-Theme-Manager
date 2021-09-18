@@ -1,7 +1,7 @@
 ext {
-    PUBLISH_GROUP_ID = 'io.github.imandolatkia'
+    PUBLISH_GROUP_ID = 'com.dolatkia'
     PUBLISH_VERSION = '1.1.2'
-    PUBLISH_ARTIFACT_ID = 'animatedThemeManager'
+    PUBLISH_ARTIFACT_ID = 'animated-theme-manager'
 }
 
 apply plugin: 'maven'
@@ -76,6 +76,7 @@ uploadArchives {
                 description = 'create your custom themes and change them dynamically with animation'
                 url = 'https://github.com/imandolatkia/Android-Animated-Theme-Manager'
                 name = PUBLISH_ARTIFACT_ID
+                artifactId = PUBLISH_ARTIFACT_ID
                 scm {
                     connection = 'scm:git:git://github.com/imandolatkia/Android-Animated-Theme-Manager.git'
                     developerConnection = 'scm:git:ssh://github.com:imandolatkia/Android-Animated-Theme-Manager.git'

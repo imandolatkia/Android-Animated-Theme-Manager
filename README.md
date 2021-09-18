@@ -41,7 +41,7 @@ add the following line to **app-level** build.gradle file, in dependencies scope
 ```gradle
 dependencies {
     ...
-    implementation "io.github.imandolatkia:animatedThemeManager:1.1.2"
+    implementation "com.dolatkia:animated-theme-manager:1.1.2"
 }
 ```
 </br>
