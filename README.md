@@ -269,7 +269,7 @@ public void syncTheme(@NotNull AppTheme appTheme) {
 
 # Some other settings and customization:
 ###  ✔️ reverse animation
-If you want to use the reverse animation, call reverseChangeTheme() instead of changeTheme():
+If you want to use the reverse animation, call `reverseChangeTheme()` instead of `changeTheme()`:
 
 ```kotline
    binder.lightButton.setOnClickListener {
@@ -279,7 +279,7 @@ If you want to use the reverse animation, call reverseChangeTheme() instead of c
 ![reverse ripple theme animation](https://user-images.githubusercontent.com/6734608/130370446-1218d53d-9c25-4dc9-8d6b-f7e8a1056731.gif)
 
 ###  ✔️ change animation duration
-If you want to change the animation duration, add your desired duration in milliseconds as the third argument of ThemeManager.instance.changeTheme(). The default value is 600:
+If you want to change the animation duration, add your desired duration in milliseconds as the third argument of `ThemeManager.instance.changeTheme()`. The default value is `600`:
 
 ```kotlin
    binder.lightButton.setOnClickListener {
@@ -288,7 +288,7 @@ If you want to change the animation duration, add your desired duration in milli
 ```
 
 ###  ✔️ change animation center position
-If you want to start animation somewhere other than the view that clicked, send a Coordinate object instead of a View in ThemeManager.instance.changeTheme()
+If you want to start animation somewhere other than the view that clicked, send a Coordinate object instead of a View in `ThemeManager.instance.changeTheme()`
 ```kotlin
    binder.lightButton.setOnClickListener {
           binder.nightButton.setOnClickListener {
@@ -297,7 +297,7 @@ If you want to start animation somewhere other than the view that clicked, send 
    }
 ```
 
-witch the Coordinate is:
+where the Coordinate is:
 ```kotlin
  Coordinate(var x: Int, var y: Int) 
 ```
@@ -313,12 +313,12 @@ If you want to observe changes of themes and do some custom action, you can use 
 
 
 ### ✔️ set animation listener
-If you want to set an animation listener, use setThemeAnimationListener() method in your activity
+If you want to set an animation listener, use `setThemeAnimationListener()` method in your activity
 
 ```kotlin
      setThemeAnimationListener(MyThemeAnimationListener(this))
 ```
-witch the MyThemeAnimationListener is:
+where the MyThemeAnimationListener is:
 
 ```kotlin
     class MyThemeAnimationListener(var context: Context) : ThemeAnimationListener{
