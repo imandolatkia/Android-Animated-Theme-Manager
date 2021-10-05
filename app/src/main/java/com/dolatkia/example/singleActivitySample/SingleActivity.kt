@@ -1,7 +1,5 @@
 package com.dolatkia.example.singleActivitySample
 
-import android.animation.Animator
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +16,7 @@ import com.dolatkia.example.themes.PinkTheme
 
 class SingleActivity : ThemeActivity() {
 
-    lateinit var binder: ActivitySingleBinding
+    private lateinit var binder: ActivitySingleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +35,13 @@ class SingleActivity : ThemeActivity() {
 
         // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(LightTheme(), it)
+            getThemeManager().changeTheme(LightTheme(), it)
         }
         binder.nightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(NightTheme(), it)
+            getThemeManager().changeTheme(NightTheme(), it)
         }
         binder.pinkButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(PinkTheme(), it)
+            getThemeManager().changeTheme(PinkTheme(), it)
         }
     }
 
@@ -80,12 +78,12 @@ class SingleActivity : ThemeActivity() {
         return LightTheme()
     }
 
-    fun syncStatusBarIconColors(theme: MyAppTheme) {
-        ThemeManager.instance.syncStatusBarIconsColorWithBackground(
+    private fun syncStatusBarIconColors(theme: MyAppTheme) {
+        getThemeManager().syncStatusBarIconsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
-        ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
+        getThemeManager().syncNavigationBarButtonsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )

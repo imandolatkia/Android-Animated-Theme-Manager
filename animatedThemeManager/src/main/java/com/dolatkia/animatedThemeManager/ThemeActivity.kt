@@ -17,6 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.hypot
 
 abstract class ThemeActivity : AppCompatActivity() {
+
+    private val activityThemeManager: ThemeManager by lazy {
+        ThemeManager(this, getStartTheme())
+    }
+
     private lateinit var root: View
     private lateinit var frontFakeThemeImageView: ImageView
     private lateinit var behindFakeThemeImageView: ImageView
@@ -24,19 +29,13 @@ abstract class ThemeActivity : AppCompatActivity() {
     private var anim: Animator? = null
     private var themeAnimationListener: ThemeAnimationListener? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ThemeManager.instance.init(this, getStartTheme())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        ThemeManager.instance.init(this, getStartTheme())
-    }
-
     override fun onStart() {
         super.onStart()
-        ThemeManager.instance.getCurrentTheme()?.let { syncTheme(it) }
+        activityThemeManager.getCurrentTheme()?.let { syncTheme(it) }
+    }
+
+    fun getThemeManager(): ThemeManager {
+        return activityThemeManager
     }
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
