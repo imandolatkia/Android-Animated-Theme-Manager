@@ -53,13 +53,13 @@ class MyFragment : ThemeFragment() {
 
         // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(LightTheme(), it)
+            getThemeManager()?.changeTheme(LightTheme(), it)
         }
         binder.nightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(NightTheme(), it)
+            getThemeManager()?.changeTheme(NightTheme(), it)
         }
         binder.pinkButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(PinkTheme(), it)
+            getThemeManager()?.changeTheme(PinkTheme(), it)
         }
 
 
@@ -98,15 +98,15 @@ class MyFragment : ThemeFragment() {
         syncStatusBarIconColors(appTheme)
     }
 
-    fun syncStatusBarIconColors(theme: MyAppTheme) {
+    private fun syncStatusBarIconColors(theme: MyAppTheme) {
         activity?.let {
-            ThemeManager.instance.syncStatusBarIconsColorWithBackground(
+            getThemeManager()?.syncStatusBarIconsColorWithBackground(
                 it,
                 theme.activityBackgroundColor(it)
             )
         }
         activity?.let {
-            ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
+            getThemeManager()?.syncNavigationBarButtonsColorWithBackground(
                 it,
                 theme.activityBackgroundColor(it)
             )

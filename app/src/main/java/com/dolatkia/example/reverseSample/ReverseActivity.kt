@@ -1,7 +1,5 @@
 package com.dolatkia.example.reverseSample
 
-import android.animation.Animator
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,17 +8,15 @@ import com.dolatkia.animatedThemeManager.AppTheme
 import com.dolatkia.animatedThemeManager.ThemeActivity
 import com.dolatkia.animatedThemeManager.ThemeManager
 import com.dolatkia.example.databinding.ActivityReverseBinding
-import com.dolatkia.example.databinding.ActivitySingleBinding
 import com.dolatkia.example.themes.LightTheme
 import com.dolatkia.example.themes.MyAppTheme
 import com.dolatkia.example.themes.NightTheme
-import com.dolatkia.example.themes.PinkTheme
 
 
 class ReverseActivity : ThemeActivity() {
 
-    lateinit var binder: ActivityReverseBinding
-    var isNight = false
+    private lateinit var binder: ActivityReverseBinding
+    private var isNight = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +37,10 @@ class ReverseActivity : ThemeActivity() {
         updateButtonText()
         binder.button.setOnClickListener {
             isNight = if(isNight){
-                ThemeManager.instance.reverseChangeTheme(LightTheme(), it)
+                getThemeManager().reverseChangeTheme(LightTheme(), it)
                 false
             }else{
-                ThemeManager.instance.changeTheme(NightTheme(), it)
+                getThemeManager().changeTheme(NightTheme(), it)
                 true
             }
             updateButtonText()
@@ -90,12 +86,12 @@ class ReverseActivity : ThemeActivity() {
         return LightTheme()
     }
 
-    fun syncStatusBarIconColors(theme: MyAppTheme) {
-        ThemeManager.instance.syncStatusBarIconsColorWithBackground(
+    private fun syncStatusBarIconColors(theme: MyAppTheme) {
+        getThemeManager().syncStatusBarIconsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
-        ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
+        getThemeManager().syncNavigationBarButtonsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )

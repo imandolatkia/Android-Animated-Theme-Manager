@@ -13,7 +13,7 @@ import com.dolatkia.example.themes.LightTheme
 
 class MyFragmentActivity : ThemeActivity() {
 
-    var fragmentNumber: Int = 0
+    private var fragmentNumber: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
