@@ -37,10 +37,10 @@ class ReverseActivity : ThemeActivity() {
         updateButtonText()
         binder.button.setOnClickListener {
             isNight = if(isNight){
-                getThemeManager().reverseChangeTheme(LightTheme(), it)
+                ThemeManager.instance.reverseChangeTheme(LightTheme(), it)
                 false
             }else{
-                getThemeManager().changeTheme(NightTheme(), it)
+                ThemeManager.instance.changeTheme(NightTheme(), it)
                 true
             }
             updateButtonText()
@@ -87,11 +87,11 @@ class ReverseActivity : ThemeActivity() {
     }
 
     private fun syncStatusBarIconColors(theme: MyAppTheme) {
-        getThemeManager().syncStatusBarIconsColorWithBackground(
+        ThemeManager.instance.syncStatusBarIconsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
-        getThemeManager().syncNavigationBarButtonsColorWithBackground(
+        ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )

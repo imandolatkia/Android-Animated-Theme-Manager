@@ -35,13 +35,13 @@ class SingleActivity : ThemeActivity() {
 
         // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
-            getThemeManager().changeTheme(LightTheme(), it)
+            ThemeManager.instance.changeTheme(LightTheme(), it)
         }
         binder.nightButton.setOnClickListener {
-            getThemeManager().changeTheme(NightTheme(), it)
+            ThemeManager.instance.changeTheme(NightTheme(), it)
         }
         binder.pinkButton.setOnClickListener {
-            getThemeManager().changeTheme(PinkTheme(), it)
+            ThemeManager.instance.changeTheme(PinkTheme(), it)
         }
     }
 
@@ -79,11 +79,11 @@ class SingleActivity : ThemeActivity() {
     }
 
     private fun syncStatusBarIconColors(theme: MyAppTheme) {
-        getThemeManager().syncStatusBarIconsColorWithBackground(
+        ThemeManager.instance.syncStatusBarIconsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
-        getThemeManager().syncNavigationBarButtonsColorWithBackground(
+        ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
