@@ -4,17 +4,8 @@ import androidx.fragment.app.Fragment
 
 abstract class ThemeFragment : Fragment() {
 
-    private val fragmentThemeManager: ThemeManager? by lazy {
-
-        if(requireActivity() is ThemeActivity) {
-            (requireActivity() as ThemeActivity).getThemeManager()
-        } else {
-            null
-        }
-    }
-
     override fun onResume() {
-        fragmentThemeManager?.getCurrentLiveTheme()?.observe(this) {
+        getThemeManager()?.getCurrentLiveTheme()?.observe(this) {
             syncTheme(it)
         }
 
@@ -22,7 +13,7 @@ abstract class ThemeFragment : Fragment() {
     }
 
     protected fun getThemeManager() : ThemeManager? {
-        return fragmentThemeManager
+        return ThemeManager.instance
     }
 
     // to sync ui with selected theme

@@ -7,12 +7,18 @@ import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.MutableLiveData
 
-class ThemeManager(private val activity: ThemeActivity, defaultTheme: AppTheme) {
+class ThemeManager {
 
     private var liveTheme: MutableLiveData<AppTheme> = MutableLiveData()
+    private lateinit var activity: ThemeActivity
 
-    init {
-        liveTheme.value = defaultTheme
+    companion object {
+        val instance = ThemeManager()
+    }
+
+    fun init(activity: ThemeActivity, defaultTheme: AppTheme) {
+        this.activity = activity
+        this.liveTheme.value = defaultTheme
     }
 
     fun getCurrentTheme(): AppTheme? {
