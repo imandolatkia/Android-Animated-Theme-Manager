@@ -8,6 +8,10 @@
 
 Create custom themes and change them dynamically with the ripple animation
 
+**✅ We are open to any new feature request, bug fix request, and pull request.**
+</br></br>
+
+# Demo
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
 </br></br>
 
