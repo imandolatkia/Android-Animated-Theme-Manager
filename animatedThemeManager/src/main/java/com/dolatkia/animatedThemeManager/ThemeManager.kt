@@ -8,7 +8,6 @@ import android.view.WindowManager
 import androidx.lifecycle.MutableLiveData
 
 class ThemeManager {
-
     private var liveTheme: MutableLiveData<AppTheme> = MutableLiveData()
     private lateinit var activity: ThemeActivity
 
@@ -111,29 +110,15 @@ class ThemeManager {
     }
 
     private fun isColorLight(color: Int): Boolean {
-        val darkness =
-            1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(
-                color
-            )) / 255
-        return darkness < 0.5
+        val t = 0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)
+        return t > 127.5
     }
 
+    private val tempViewLocation = IntArray(2)
     private fun getViewCoordinates(view: View): Coordinate {
-        return Coordinate(
-            getRelativeLeft(view) + view.width / 2,
-            getRelativeTop(view) + view.height / 2
-        )
-    }
+        val location = tempViewLocation
+        view.getLocationInWindow(location)
 
-    private fun getRelativeLeft(myView: View): Int {
-        return if ((myView.parent as View).id == R.id.mainContainer) myView.left else myView.left + getRelativeLeft(
-            myView.parent as View
-        )
-    }
-
-    private fun getRelativeTop(myView: View): Int {
-        return if ((myView.parent as View).id == R.id.mainContainer) myView.top else myView.top + getRelativeTop(
-            myView.parent as View
-        )
+        return Coordinate(location[0] + view.width / 2, location[1] + view.height / 2)
     }
 }

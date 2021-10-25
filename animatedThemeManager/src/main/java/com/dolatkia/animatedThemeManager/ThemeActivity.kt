@@ -14,7 +14,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.math.hypot
+import kotlin.math.sqrt
 
 abstract class ThemeActivity : AppCompatActivity() {
 
@@ -89,9 +89,9 @@ abstract class ThemeActivity : AppCompatActivity() {
         }
 
         // take screenshot
-        val w = decorView.measuredWidth.toFloat()
-        val h = decorView.measuredHeight.toFloat()
-        val bitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
+        val w = decorView.measuredWidth
+        val h = decorView.measuredHeight
+        val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         decorView.draw(canvas)
 
@@ -99,7 +99,7 @@ abstract class ThemeActivity : AppCompatActivity() {
         syncTheme(newTheme)
 
         //create anim
-        val finalRadius = hypot(w.toDouble(), h.toDouble()).toFloat()
+        val finalRadius = sqrt((w * w + h * h).toDouble()).toFloat()
         if (isReverse) {
             frontFakeThemeImageView.setImageBitmap(bitmap)
             frontFakeThemeImageView.visibility = View.VISIBLE
