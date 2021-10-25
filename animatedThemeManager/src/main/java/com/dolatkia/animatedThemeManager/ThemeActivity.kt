@@ -3,36 +3,33 @@ package com.dolatkia.animatedThemeManager
 import android.animation.Animator
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.sqrt
 
 abstract class ThemeActivity : AppCompatActivity() {
-
     private lateinit var root: View
-    private lateinit var frontFakeThemeImageView: ImageView
-    private lateinit var behindFakeThemeImageView: ImageView
+    private lateinit var frontFakeThemeImageView: SimpleImageView
+    private lateinit var behindFakeThemeImageView: SimpleImageView
     private lateinit var decorView: FrameLayout
+
     private var anim: Animator? = null
     private var themeAnimationListener: ThemeAnimationListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ThemeManager.instance.init(this, getStartTheme())
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        ThemeManager.instance.init(this, getStartTheme())
+        initViews()
+        super.setContentView(root)
     }
 
     override fun onStart() {
@@ -45,28 +42,55 @@ abstract class ThemeActivity : AppCompatActivity() {
     }
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
-        createViews()
-        decorView.addView(LayoutInflater.from(this).inflate(layoutResID, null))
-        super.setContentView(root)
+        setContentView(LayoutInflater.from(this).inflate(layoutResID, decorView))
     }
 
     override fun setContentView(view: View?) {
-        createViews()
+        decorView.removeAllViews()
         decorView.addView(view)
-        super.setContentView(root)
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        createViews()
+        decorView.removeAllViews()
         decorView.addView(view, params)
-        super.setContentView(root)
     }
 
-    private fun createViews() {
-        root = LayoutInflater.from(this).inflate(R.layout.change_theme_activity, null)
-        decorView = root.findViewById(R.id.mainContainer)
-        frontFakeThemeImageView = root.findViewById(R.id.frontFakeThemeImageView)
-        behindFakeThemeImageView = root.findViewById(R.id.behindFakeThemeImageView)
+    private fun initViews() {
+        root = FrameLayout(this).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+
+            addView(SimpleImageView(context).apply {
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+
+                visibility = View.GONE
+                behindFakeThemeImageView = this
+            })
+
+            addView(FrameLayout(context).apply {
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+
+                decorView = this
+            })
+
+            addView(SimpleImageView(context).apply {
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+
+                visibility = View.GONE
+                frontFakeThemeImageView = this
+            })
+        }
     }
 
     fun changeTheme(
@@ -101,7 +125,7 @@ abstract class ThemeActivity : AppCompatActivity() {
         //create anim
         val finalRadius = sqrt((w * w + h * h).toDouble()).toFloat()
         if (isReverse) {
-            frontFakeThemeImageView.setImageBitmap(bitmap)
+            frontFakeThemeImageView.bitmap = bitmap
             frontFakeThemeImageView.visibility = View.VISIBLE
             anim = ViewAnimationUtils.createCircularReveal(
                 frontFakeThemeImageView,
@@ -111,7 +135,7 @@ abstract class ThemeActivity : AppCompatActivity() {
                 0f
             )
         } else {
-            behindFakeThemeImageView.setImageBitmap(bitmap)
+            behindFakeThemeImageView.bitmap = bitmap
             behindFakeThemeImageView.visibility = View.VISIBLE
             anim = ViewAnimationUtils.createCircularReveal(
                 decorView,
@@ -132,8 +156,8 @@ abstract class ThemeActivity : AppCompatActivity() {
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                behindFakeThemeImageView.setImageDrawable(null)
-                frontFakeThemeImageView.setImageDrawable(null)
+                behindFakeThemeImageView.bitmap = null
+                frontFakeThemeImageView.bitmap = null
                 frontFakeThemeImageView.visibility = View.GONE
                 behindFakeThemeImageView.visibility = View.GONE
                 themeAnimationListener?.onAnimationEnd(animation)
