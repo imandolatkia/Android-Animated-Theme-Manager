@@ -124,13 +124,13 @@ class ThemeManager {
     }
 
     private fun getRelativeLeft(myView: View): Int {
-        return if ((myView.parent as View).id == R.id.mainContainer) myView.left else myView.left + getRelativeLeft(
+        return if ((myView.parent as View).id == ThemeActivity.ROOT_ID) myView.left else myView.left + getRelativeLeft(
             myView.parent as View
         )
     }
 
     private fun getRelativeTop(myView: View): Int {
-        return if ((myView.parent as View).id == R.id.mainContainer) myView.top else myView.top + getRelativeTop(
+        return if ((myView.parent as View).id == ThemeActivity.ROOT_ID) myView.top else myView.top + getRelativeTop(
             myView.parent as View
         )
     }

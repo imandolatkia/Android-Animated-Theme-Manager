@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import kotlin.math.sqrt
 
 abstract class ThemeActivity : AppCompatActivity() {
@@ -79,6 +80,7 @@ abstract class ThemeActivity : AppCompatActivity() {
                 )
 
                 decorView = this
+                id = ROOT_ID
             })
 
             addView(SimpleImageView(context).apply {
@@ -189,4 +191,8 @@ abstract class ThemeActivity : AppCompatActivity() {
 
     // to get stat theme
     abstract fun getStartTheme(): AppTheme
+
+    companion object {
+        internal val ROOT_ID = ViewCompat.generateViewId()
+    }
 }
