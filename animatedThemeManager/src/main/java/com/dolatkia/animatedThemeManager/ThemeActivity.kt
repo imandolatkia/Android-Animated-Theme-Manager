@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -25,10 +26,16 @@ abstract class ThemeActivity : AppCompatActivity() {
     private var anim: Animator? = null
     private var themeAnimationListener: ThemeAnimationListener? = null
 
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        ThemeManager.instance.init(this, getStartTheme())
+        initViews()
+        super.setContentView(root)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ThemeManager.instance.init(this, getStartTheme())
-
         initViews()
         super.setContentView(root)
     }
@@ -57,38 +64,39 @@ abstract class ThemeActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        // create roo view
         root = FrameLayout(this).apply {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
-
+            
+            // create and add behindFakeThemeImageView
             addView(SimpleImageView(context).apply {
                 layoutParams = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT
                 )
-
                 visibility = View.GONE
                 behindFakeThemeImageView = this
             })
 
+            // create and add decorView, ROOT_ID is generated ID
             addView(FrameLayout(context).apply {
                 layoutParams = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT
                 )
-
                 decorView = this
                 id = ROOT_ID
             })
 
+            // create and add frontFakeThemeImageView
             addView(SimpleImageView(context).apply {
                 layoutParams = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT
                 )
-
                 visibility = View.GONE
                 frontFakeThemeImageView = this
             })
@@ -193,6 +201,7 @@ abstract class ThemeActivity : AppCompatActivity() {
     abstract fun getStartTheme(): AppTheme
 
     companion object {
+        //generated Id for decorView
         internal val ROOT_ID = ViewCompat.generateViewId()
     }
 }
