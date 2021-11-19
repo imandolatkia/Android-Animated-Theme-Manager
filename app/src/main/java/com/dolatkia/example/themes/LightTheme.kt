@@ -9,8 +9,12 @@ import com.dolatkia.example.R
 
 class LightTheme : MyAppTheme {
 
+    companion object {
+        val ThemeId = 0
+    }
+
     override fun id(): Int {
-        return 0
+        return ThemeId
     }
 
     override fun activityBackgroundColor(context: Context): Int {

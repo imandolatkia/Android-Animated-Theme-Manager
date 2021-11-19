@@ -9,8 +9,11 @@ import com.dolatkia.example.R
 
 class PinkTheme : MyAppTheme {
 
+    companion object {
+        val ThemeId = 2
+    }
     override fun id(): Int {
-        return 2
+        return ThemeId
     }
 
     override fun activityBackgroundColor(context: Context): Int {

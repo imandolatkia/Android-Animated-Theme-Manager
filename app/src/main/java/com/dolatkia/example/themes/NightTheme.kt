@@ -6,8 +6,12 @@ import com.dolatkia.example.R
 
 class NightTheme : MyAppTheme {
 
+    companion object {
+        val ThemeId = 1
+    }
+
     override fun id(): Int {
-        return 1
+        return ThemeId
     }
 
     override fun activityBackgroundColor(context: Context): Int {

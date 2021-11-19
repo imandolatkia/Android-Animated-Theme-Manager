@@ -16,7 +16,6 @@ import com.dolatkia.example.themes.NightTheme
 class ReverseActivity : ThemeActivity() {
 
     private lateinit var binder: ActivityReverseBinding
-    private var isNight = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +35,14 @@ class ReverseActivity : ThemeActivity() {
         // set change theme click listeners for buttons
         updateButtonText()
         binder.button.setOnClickListener {
-            isNight = if(isNight){
+            if (ThemeManager.instance.getCurrentTheme()
+                    ?.id() == NightTheme.ThemeId
+            ) {
                 ThemeManager.instance.reverseChangeTheme(LightTheme(), it)
-                false
-            }else{
+            } else if (ThemeManager.instance.getCurrentTheme()
+                    ?.id() != NightTheme.ThemeId
+            ) {
                 ThemeManager.instance.changeTheme(NightTheme(), it)
-                true
             }
             updateButtonText()
         }
@@ -50,7 +51,6 @@ class ReverseActivity : ThemeActivity() {
     // to sync ui with selected theme
     override fun syncTheme(appTheme: AppTheme) {
         // change ui colors with new appThem here
-
         val myAppTheme = appTheme as MyAppTheme
 
         // set background color
@@ -74,7 +74,7 @@ class ReverseActivity : ThemeActivity() {
     }
 
     fun updateButtonText() {
-        if (isNight) {
+        if (ThemeManager.instance.getCurrentTheme()?.id() == NightTheme.ThemeId) {
             binder.buttonTextView.text = "Light"
         } else {
             binder.buttonTextView.text = "Night"
