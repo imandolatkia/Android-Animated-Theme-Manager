@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Single Activity Sample"
+                android:text="Just Activities Sample"
                 android:textColor="@color/black" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Fragment Sample"
+                android:text="Multi Fragments and Single Activity Sample"
                 android:textColor="@color/black" />
 
         </com.google.android.material.card.MaterialCardView>

@@ -17,8 +17,14 @@ class ThemeManager {
     }
 
     fun init(activity: ThemeActivity, defaultTheme: AppTheme) {
+        if (liveTheme.value == null) {
+            this.liveTheme.value = defaultTheme
+        }
         this.activity = activity
-        this.liveTheme.value = defaultTheme
+    }
+
+    fun setActivity(activity: ThemeActivity) {
+        this.activity = activity
     }
 
     fun getCurrentTheme(): AppTheme? {

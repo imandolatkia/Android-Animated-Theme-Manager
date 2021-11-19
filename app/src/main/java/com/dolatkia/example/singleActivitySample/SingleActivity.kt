@@ -1,5 +1,6 @@
 package com.dolatkia.example.singleActivitySample
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,9 +18,13 @@ import com.dolatkia.example.themes.PinkTheme
 class SingleActivity : ThemeActivity() {
 
     private lateinit var binder: ActivitySingleBinding
+    private var number: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //get number
+        number = intent.getIntExtra("number", 1)
 
         // full screen app
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -33,6 +38,9 @@ class SingleActivity : ThemeActivity() {
         binder = ActivitySingleBinding.inflate(LayoutInflater.from(this))
         setContentView(binder.root)
 
+        // set activity number text
+        binder.ActivityNumber.text = number.toString()
+
         // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
             ThemeManager.instance.changeTheme(LightTheme(), it)
@@ -42,6 +50,11 @@ class SingleActivity : ThemeActivity() {
         }
         binder.pinkButton.setOnClickListener {
             ThemeManager.instance.changeTheme(PinkTheme(), it)
+        }
+        binder.nextActivityBtn.setOnClickListener {
+            val myIntent = Intent(this, SingleActivity::class.java)
+            myIntent.putExtra("number", number + 1)
+            this.startActivity(myIntent)
         }
     }
 
@@ -68,6 +81,7 @@ class SingleActivity : ThemeActivity() {
         binder.lightButton.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
         binder.nightButton.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
         binder.pinkButton.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
+        binder.nextActivityBtn.setCardBackgroundColor(appTheme.activityThemeButtonColor(this))
 
         //syncStatusBarIconColors
         syncStatusBarIconColors(appTheme)

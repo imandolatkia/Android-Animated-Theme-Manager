@@ -40,8 +40,9 @@ abstract class ThemeActivity : AppCompatActivity() {
         super.setContentView(root)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+        ThemeManager.instance.setActivity(this)
         getThemeManager().getCurrentTheme()?.let { syncTheme(it) }
     }
 
@@ -70,7 +71,7 @@ abstract class ThemeActivity : AppCompatActivity() {
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
-            
+
             // create and add behindFakeThemeImageView
             addView(SimpleImageView(context).apply {
                 layoutParams = FrameLayout.LayoutParams(
