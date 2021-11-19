@@ -198,7 +198,8 @@ abstract class ThemeActivity : AppCompatActivity() {
     // to sync ui with selected theme
     abstract fun syncTheme(appTheme: AppTheme)
 
-    // to get stat theme
+    // to save the theme for the next time, save it in onDestroy() (exp: in pref or DB) and return it here.
+    // it just used for the first time (first activity).
     abstract fun getStartTheme(): AppTheme
 
     companion object {

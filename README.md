@@ -37,7 +37,7 @@ Add the following line to **app-level** build.gradle file, in dependencies scope
 ```gradle
 dependencies {
     ...
-    implementation "com.dolatkia:animated-theme-manager:1.1.3"
+    implementation "com.dolatkia:animated-theme-manager:1.1.4"
 }
 ```
 </br>
@@ -164,7 +164,8 @@ override fun syncTheme(appTheme: AppTheme) {
     ...
 }
 
-// to get the start theme
+// to save the theme for the next time, save it in onDestroy() (exp: in pref or DB) and return it here.
+// it just used for the first time (first activity).
 override fun getStartTheme(): AppTheme {
     return LightTheme()
 }
