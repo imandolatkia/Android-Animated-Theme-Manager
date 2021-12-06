@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Just Activities Sample"
+                android:text="Just activities sample"
                 android:textColor="@color/black" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Multi Fragments and Single Activity Sample"
+                android:text="Multi fragments and single activity sample"
                 android:textColor="@color/black" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -61,8 +61,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Reverse Animation"
+                android:text="Reverse animation"
                 android:textColor="@color/black" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/github"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:textColor="?colorAccent"
+            app:cardBackgroundColor="#121212"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_github" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center"
+                    android:paddingRight="10dp"
+                    android:text="Go to Github page"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
