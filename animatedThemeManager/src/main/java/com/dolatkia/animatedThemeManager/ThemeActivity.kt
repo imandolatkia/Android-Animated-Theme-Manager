@@ -51,7 +51,7 @@ abstract class ThemeActivity : AppCompatActivity() {
     }
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
-        setContentView(LayoutInflater.from(this).inflate(layoutResID, decorView))
+        setContentView(LayoutInflater.from(this).inflate(layoutResID, decorView, false))
     }
 
     override fun setContentView(view: View?) {
