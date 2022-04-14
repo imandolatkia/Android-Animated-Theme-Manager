@@ -35,14 +35,10 @@ class ReverseActivity : ThemeActivity() {
         // set change theme click listeners for buttons
         updateButtonText()
         binder.button.setOnClickListener {
-            if (ThemeManager.instance.getCurrentTheme()
-                    ?.id() == NightTheme.ThemeId
-            ) {
-                ThemeManager.instance.reverseChangeTheme(LightTheme(), it)
-            } else if (ThemeManager.instance.getCurrentTheme()
-                    ?.id() != NightTheme.ThemeId
-            ) {
-                ThemeManager.instance.changeTheme(NightTheme(), it)
+            if (themeManager.currentTheme?.id() == NightTheme.ThemeId) {
+                themeManager.reverseChangeTheme(LightTheme(), it)
+            } else if (themeManager.currentTheme?.id() != NightTheme.ThemeId) {
+                themeManager.changeTheme(NightTheme(), it)
             }
             updateButtonText()
         }
@@ -74,7 +70,7 @@ class ReverseActivity : ThemeActivity() {
     }
 
     fun updateButtonText() {
-        if (ThemeManager.instance.getCurrentTheme()?.id() == NightTheme.ThemeId) {
+        if (themeManager.currentTheme?.id() == NightTheme.ThemeId) {
             binder.buttonTextView.text = "Light"
         } else {
             binder.buttonTextView.text = "Night"
@@ -87,11 +83,11 @@ class ReverseActivity : ThemeActivity() {
     }
 
     private fun syncStatusBarIconColors(theme: MyAppTheme) {
-        ThemeManager.instance.syncStatusBarIconsColorWithBackground(
+        themeManager.syncStatusBarIconsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
-        ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
+        themeManager.syncNavigationBarButtonsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )

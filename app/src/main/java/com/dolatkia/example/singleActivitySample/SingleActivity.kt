@@ -3,8 +3,10 @@ package com.dolatkia.example.singleActivitySample
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
+import androidx.lifecycle.lifecycleScope
 import com.dolatkia.animatedThemeManager.AppTheme
 import com.dolatkia.animatedThemeManager.ThemeActivity
 import com.dolatkia.animatedThemeManager.ThemeManager
@@ -13,6 +15,7 @@ import com.dolatkia.example.themes.LightTheme
 import com.dolatkia.example.themes.MyAppTheme
 import com.dolatkia.example.themes.NightTheme
 import com.dolatkia.example.themes.PinkTheme
+import kotlinx.coroutines.flow.filterNotNull
 
 
 class SingleActivity : ThemeActivity() {
@@ -43,18 +46,23 @@ class SingleActivity : ThemeActivity() {
 
         // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(LightTheme(), it)
+            themeManager.changeTheme(LightTheme(), it)
         }
         binder.nightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(NightTheme(), it)
+            themeManager.changeTheme(NightTheme(), it)
         }
         binder.pinkButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(PinkTheme(), it)
+            themeManager.changeTheme(PinkTheme(), it)
         }
         binder.nextActivityBtn.setOnClickListener {
             val myIntent = Intent(this, SingleActivity::class.java)
             myIntent.putExtra("number", number + 1)
             this.startActivity(myIntent)
+        }
+        lifecycleScope.launchWhenStarted {
+            themeManager.theme.filterNotNull().collect {
+                Log.i("Changed Theme", "Using theme with id: ${it.id()}")
+            }
         }
     }
 
@@ -93,11 +101,11 @@ class SingleActivity : ThemeActivity() {
     }
 
     private fun syncStatusBarIconColors(theme: MyAppTheme) {
-        ThemeManager.instance.syncStatusBarIconsColorWithBackground(
+        themeManager.syncStatusBarIconsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )
-        ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
+        themeManager.syncNavigationBarButtonsColorWithBackground(
             this,
             theme.activityBackgroundColor(this)
         )

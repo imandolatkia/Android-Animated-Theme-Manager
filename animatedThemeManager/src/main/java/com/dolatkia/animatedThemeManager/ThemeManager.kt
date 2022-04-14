@@ -7,48 +7,60 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
-class ThemeManager {
+object ThemeManager {
 
-    private var liveTheme: MutableLiveData<AppTheme> = MutableLiveData()
-    private lateinit var activity: ThemeActivity
+    private val _liveTheme: MutableStateFlow<AppTheme?> = MutableStateFlow(null)
+    val theme: SharedFlow<AppTheme?> = _liveTheme.asSharedFlow()
+    val currentTheme: AppTheme?
+        get() = _liveTheme.value
 
-    companion object {
-        val instance = ThemeManager()
-    }
+    private var activity: WeakReference<ThemeActivity?> = WeakReference(null)
 
     fun init(activity: ThemeActivity, defaultTheme: AppTheme) {
-        if (liveTheme.value == null) {
-            this.liveTheme.value = defaultTheme
+        if (_liveTheme.value == null) {
+            val success = this._liveTheme.tryEmit(defaultTheme)
+            if (!success) {
+                try {
+                    activity.lifecycleScope.launch(Dispatchers.IO) {
+                        _liveTheme.emit(defaultTheme)
+                    }
+                } catch (ignored: Exception) {
+                    _liveTheme.value = defaultTheme
+                }
+            }
         }
-        this.activity = activity
+        setActivity(activity)
     }
 
     fun setActivity(activity: ThemeActivity) {
-        this.activity = activity
+        clearActivity()
+        this.activity = WeakReference(activity)
+        this.activity.enqueue()
     }
 
-    fun getCurrentTheme(): AppTheme? {
-        return getCurrentLiveTheme().value
-    }
-
-    fun getCurrentLiveTheme(): MutableLiveData<AppTheme> {
-        return liveTheme
-    }
-
+    @JvmOverloads
     fun reverseChangeTheme(newTheme: AppTheme, view: View, duration: Long = 600) {
         changeTheme(newTheme, getViewCoordinates(view), duration, true)
     }
 
+    @JvmOverloads
     fun reverseChangeTheme(newTheme: AppTheme, sourceCoordinate: Coordinate, duration: Long = 600) {
         changeTheme(newTheme, sourceCoordinate, duration, true)
 
     }
 
+    @JvmOverloads
     fun changeTheme(newTheme: AppTheme, view: View, duration: Long = 600) {
         changeTheme(newTheme, getViewCoordinates(view), duration)
     }
 
+    @JvmOverloads
     fun changeTheme(
         newTheme: AppTheme,
         sourceCoordinate: Coordinate,
@@ -56,15 +68,28 @@ class ThemeManager {
         isRevers: Boolean = false
     ) {
 
-        if (getCurrentTheme()?.id() == newTheme.id() || activity.isRunningChangeThemeAnimation()) {
+        if (currentTheme?.id() == newTheme.id() || activity.get()?.isRunningChangeThemeAnimation() == true) {
             return
         }
 
         //start animation
-        activity.changeTheme(newTheme, sourceCoordinate, duration, isRevers)
+        activity.get()?.changeTheme(newTheme, sourceCoordinate, duration, isRevers)
 
-        //set LiveData
-        getCurrentLiveTheme().value = newTheme
+        val success = _liveTheme.tryEmit(newTheme)
+        if (!success) {
+            val scope = activity.get()?.lifecycleScope
+            if (scope != null) {
+                try {
+                    scope.launch(Dispatchers.IO) {
+                        _liveTheme.emit(newTheme)
+                    }
+                } catch (ignored: Exception) {
+                    this._liveTheme.value = newTheme
+                }
+            } else {
+                this._liveTheme.value = newTheme
+            }
+        }
     }
 
     fun setStatusBarBackgroundColor(activity: Activity, color: Int) {
@@ -108,17 +133,17 @@ class ThemeManager {
 
     fun syncNavigationBarButtonsColorWithBackground(
         activity: Activity,
-        navigationbarBackgroundClor: Int
+        navigationBarBackgroundColor: Int
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             activity.window.insetsController?.setSystemBarsAppearance(
-                if (isColorLight(navigationbarBackgroundClor)) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0,
+                if (isColorLight(navigationBarBackgroundColor)) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0,
                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val decorView = activity.window.decorView
             var flags = decorView.systemUiVisibility
-            flags = if (isColorLight(navigationbarBackgroundClor)) {
+            flags = if (isColorLight(navigationBarBackgroundColor)) {
                 flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             } else {
                 flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
@@ -150,5 +175,10 @@ class ThemeManager {
         return if ((myView.parent as View).id == ThemeActivity.ROOT_ID) myView.top else myView.top + getRelativeTop(
             myView.parent as View
         )
+    }
+
+    internal fun clearActivity() {
+        this.activity.clear()
+        this.activity.enqueue()
     }
 }
