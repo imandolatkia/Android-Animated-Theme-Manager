@@ -18,10 +18,10 @@ import androidx.core.view.ViewCompat
 import kotlin.math.sqrt
 
 abstract class ThemeActivity : AppCompatActivity() {
-    private lateinit var root: View
-    private lateinit var frontFakeThemeImageView: SimpleImageView
-    private lateinit var behindFakeThemeImageView: SimpleImageView
-    private lateinit var decorView: FrameLayout
+    private var root: View? = null
+    private var frontFakeThemeImageView: SimpleImageView? = null
+    private var behindFakeThemeImageView: SimpleImageView? = null
+    private var decorView: FrameLayout? = null
 
     private var anim: Animator? = null
     private var themeAnimationListener: ThemeAnimationListener? = null
@@ -54,13 +54,17 @@ abstract class ThemeActivity : AppCompatActivity() {
     }
 
     override fun setContentView(view: View?) {
-        decorView.removeAllViews()
-        decorView.addView(view)
+        decorView?.let {
+            it.removeAllViews()
+            it.addView(view)
+        }
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        decorView.removeAllViews()
-        decorView.addView(view, params)
+        decorView?.let {
+            it.removeAllViews()
+            it.addView(view, params)
+        }
     }
 
     private fun initViews() {
@@ -115,19 +119,19 @@ abstract class ThemeActivity : AppCompatActivity() {
             return
         }
 
-        if (frontFakeThemeImageView.visibility == View.VISIBLE ||
-            behindFakeThemeImageView.visibility == View.VISIBLE ||
+        if (frontFakeThemeImageView?.visibility == View.VISIBLE ||
+            behindFakeThemeImageView?.visibility == View.VISIBLE ||
             isRunningChangeThemeAnimation()
         ) {
             return
         }
 
         // take screenshot
-        val w = decorView.measuredWidth
-        val h = decorView.measuredHeight
+        val w = decorView?.measuredWidth ?: 0
+        val h = decorView?.measuredHeight ?: 0
         val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        decorView.draw(canvas)
+        decorView?.draw(canvas)
 
         // update theme
         syncTheme(newTheme)
@@ -135,8 +139,8 @@ abstract class ThemeActivity : AppCompatActivity() {
         //create anim
         val finalRadius = sqrt((w * w + h * h).toDouble()).toFloat()
         if (isReverse) {
-            frontFakeThemeImageView.bitmap = bitmap
-            frontFakeThemeImageView.visibility = View.VISIBLE
+            frontFakeThemeImageView?.bitmap = bitmap
+            frontFakeThemeImageView?.visibility = View.VISIBLE
             anim = ViewAnimationUtils.createCircularReveal(
                 frontFakeThemeImageView,
                 sourceCoordinate.x,
@@ -145,8 +149,8 @@ abstract class ThemeActivity : AppCompatActivity() {
                 0f
             )
         } else {
-            behindFakeThemeImageView.bitmap = bitmap
-            behindFakeThemeImageView.visibility = View.VISIBLE
+            behindFakeThemeImageView?.bitmap = bitmap
+            behindFakeThemeImageView?.visibility = View.VISIBLE
             anim = ViewAnimationUtils.createCircularReveal(
                 decorView,
                 sourceCoordinate.x,
@@ -166,10 +170,10 @@ abstract class ThemeActivity : AppCompatActivity() {
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                behindFakeThemeImageView.bitmap = null
-                frontFakeThemeImageView.bitmap = null
-                frontFakeThemeImageView.visibility = View.GONE
-                behindFakeThemeImageView.visibility = View.GONE
+                behindFakeThemeImageView?.bitmap = null
+                frontFakeThemeImageView?.bitmap = null
+                frontFakeThemeImageView?.visibility = View.GONE
+                behindFakeThemeImageView?.visibility = View.GONE
                 themeAnimationListener?.onAnimationEnd(animation)
             }
 
@@ -203,6 +207,10 @@ abstract class ThemeActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         themeManager.clearActivity()
+        frontFakeThemeImageView = null
+        behindFakeThemeImageView = null
+        root = null
+        decorView = null
         super.onDestroy()
     }
 
