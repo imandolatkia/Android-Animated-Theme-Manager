@@ -28,27 +28,26 @@ abstract class ThemeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        ThemeManager.instance.init(this, getStartTheme())
+        ThemeManager.init(this, getStartTheme())
         initViews()
         super.setContentView(root)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeManager.instance.init(this, getStartTheme())
+        ThemeManager.init(this, getStartTheme())
         initViews()
         super.setContentView(root)
     }
 
     override fun onResume() {
         super.onResume()
-        ThemeManager.instance.setActivity(this)
-        getThemeManager().getCurrentTheme()?.let { syncTheme(it) }
+        ThemeManager.setActivity(this)
+        themeManager.currentTheme?.let { syncTheme(it) }
     }
 
-    fun getThemeManager(): ThemeManager {
-        return ThemeManager.instance
-    }
+    protected val themeManager: ThemeManager
+        get() = ThemeManager
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
         setContentView(LayoutInflater.from(this).inflate(layoutResID, decorView, false))
@@ -201,6 +200,11 @@ abstract class ThemeActivity : AppCompatActivity() {
     // to save the theme for the next time, save it in onDestroy() (exp: in pref or DB) and return it here.
     // it just used for the first time (first activity).
     abstract fun getStartTheme(): AppTheme
+
+    override fun onDestroy() {
+        themeManager.clearActivity()
+        super.onDestroy()
+    }
 
     companion object {
         //generated Id for decorView
