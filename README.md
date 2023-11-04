@@ -13,8 +13,6 @@ Create custom themes and change them dynamically with the ripple animation
 
 # Demo
 ![animation-ripple-android-theme](https://user-images.githubusercontent.com/6734608/129915453-b57a1618-2d20-42a3-85a7-57bd1c425522.gif)
-
-[![download_from_google](https://user-images.githubusercontent.com/6734608/146635579-86743f83-2011-4bd6-a3fb-ce061faa3d42.png)](https://play.google.com/store/apps/details?id=com.dolatkia.thememanager)
 </br></br>
 
 
