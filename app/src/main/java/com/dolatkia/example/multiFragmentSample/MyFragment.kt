@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import com.dolatkia.animatedThemeManager.AppTheme
 import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.dolatkia.animatedThemeManager.ThemeManager
+import com.dolatkia.example.R
 import com.dolatkia.example.databinding.FragmentBinding
 import com.dolatkia.example.themes.LightTheme
 import com.dolatkia.example.themes.MyAppTheme
 import com.dolatkia.example.themes.NightTheme
 import com.dolatkia.example.themes.PinkTheme
 
-class MyFragment : ThemeFragment() {
+class MyFragment : ThemeFragment(R.layout.fragment) {
 
     private lateinit var binder: FragmentBinding
     private var number: Int = 0
@@ -34,16 +35,11 @@ class MyFragment : ThemeFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // create and bind views
-        binder = FragmentBinding.inflate(inflater)
+        binder = FragmentBinding.bind(view)
 
-        // set fragmentNumber
         binder.fragmentNumber.text = number.toString()
 
         //set next fragment click listener
@@ -53,18 +49,16 @@ class MyFragment : ThemeFragment() {
 
         // set change theme click listeners for buttons
         binder.lightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(LightTheme(), it)
+            themeManager.changeTheme(LightTheme(), it)
         }
         binder.nightButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(NightTheme(), it)
+            themeManager.changeTheme(NightTheme(), it)
         }
         binder.pinkButton.setOnClickListener {
-            ThemeManager.instance.changeTheme(PinkTheme(), it)
+            themeManager.changeTheme(PinkTheme(), it)
         }
-
-
-        return binder.root
     }
+
 
     // to sync ui with selected theme
     override fun syncTheme(appTheme: AppTheme) {
@@ -100,13 +94,13 @@ class MyFragment : ThemeFragment() {
 
     private fun syncStatusBarIconColors(theme: MyAppTheme) {
         activity?.let {
-            ThemeManager.instance.syncStatusBarIconsColorWithBackground(
+            themeManager.syncStatusBarIconsColorWithBackground(
                 it,
                 theme.activityBackgroundColor(it)
             )
         }
         activity?.let {
-            ThemeManager.instance.syncNavigationBarButtonsColorWithBackground(
+            themeManager.syncNavigationBarButtonsColorWithBackground(
                 it,
                 theme.activityBackgroundColor(it)
             )
